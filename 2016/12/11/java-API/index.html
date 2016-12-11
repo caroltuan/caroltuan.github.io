@@ -8,35 +8,38 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>java collection接口（基础整理） | Carol</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="集合的整体的框架结构转自
+  <meta name="description" content="集合的整体的框架结构more
+转自
+http://blog.csdn.net/softwave/article/details/4166598
 
 在整个集合框架中顶层的接口：Collection接口。
  在Collection接口下有两个子接口List 和Set
  在整个集合框架中还有一个接口Map
-Collection├List│├LinkedList│├ArrayList│└Vector│　└Stack└SetMap├Hashtable├HashMap└WeakHashMap
-Collection是最基本的集">
+Collection├List│├LinkedList│├ArrayList│└Vector│　└">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java collection接口（基础整理）">
 <meta property="og:url" content="http://yoursite.com/2016/12/11/java-API/index.html">
 <meta property="og:site_name" content="Carol">
-<meta property="og:description" content="集合的整体的框架结构转自
+<meta property="og:description" content="集合的整体的框架结构more
+转自
+http://blog.csdn.net/softwave/article/details/4166598
 
 在整个集合框架中顶层的接口：Collection接口。
  在Collection接口下有两个子接口List 和Set
  在整个集合框架中还有一个接口Map
-Collection├List│├LinkedList│├ArrayList│└Vector│　└Stack└SetMap├Hashtable├HashMap└WeakHashMap
-Collection是最基本的集">
+Collection├List│├LinkedList│├ArrayList│└Vector│　└">
 <meta property="og:image" content="http://yoursite.com/\images\collection.png">
-<meta property="og:updated_time" content="2016-12-11T06:45:31.854Z">
+<meta property="og:updated_time" content="2016-12-11T12:21:46.162Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java collection接口（基础整理）">
-<meta name="twitter:description" content="集合的整体的框架结构转自
+<meta name="twitter:description" content="集合的整体的框架结构more
+转自
+http://blog.csdn.net/softwave/article/details/4166598
 
 在整个集合框架中顶层的接口：Collection接口。
  在Collection接口下有两个子接口List 和Set
  在整个集合框架中还有一个接口Map
-Collection├List│├LinkedList│├ArrayList│└Vector│　└Stack└SetMap├Hashtable├HashMap└WeakHashMap
-Collection是最基本的集">
+Collection├List│├LinkedList│├ArrayList│└Vector│　└">
 <meta name="twitter:image" content="http://yoursite.com/\images\collection.png">
   
     <link rel="alternative" href="/atom.xml" title="Carol" type="application/atom+xml">
@@ -171,7 +174,9 @@ Collection是最基本的集">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h5 id="集合的整体的框架结构"><a href="#集合的整体的框架结构" class="headerlink" title="集合的整体的框架结构"></a>集合的整体的框架结构</h5><p>转自</p>
+        <h5 id="集合的整体的框架结构"><a href="#集合的整体的框架结构" class="headerlink" title="集合的整体的框架结构"></a>集合的整体的框架结构</h5><p>more</p>
+<p>转自</p>
+<p><a href="http://blog.csdn.net/softwave/article/details/4166598" target="_blank" rel="external">http://blog.csdn.net/softwave/article/details/4166598</a></p>
 <p><img src="\images\collection.png" alt="collection"></p>
 <p>在整个集合框架中顶层的接口：Collection接口。</p>
 <p> 在Collection接口下有两个子接口List 和Set</p>
@@ -194,6 +199,7 @@ Collection是最基本的集">
 <p>使用Hashtable的简单示例如下，将1，2，3放到Hashtable中，他们的key分别是”one”，”two”，”three”：<br>　　　　Hashtable numbers = new Hashtable();<br>　　　　numbers.put(“one”, new Integer(1));<br>　　　　numbers.put(“two”, new Integer(2));<br>　　　　numbers.put(“three”, new Integer(3));<br>　　要取出一个数，比如2，用相应的key：<br>　　　　Integer n = (Integer)numbers.get(“two”);</p>
 <p>由于作为key的对象将通过计算其散列函数来确定与之对应的value的位置，因此任何作为key的对象都必须实现hashCode和equals方 法。hashCode和equals方法继承自根类Object，如果你用自定义的类当作key的话，要相当小心，按照散列函数的定义，如果两个对象相 同，即obj1.equals(obj2)=true，则它们的hashCode必须相同，但如果两个对象不同，则它们的hashCode不一定不同，如 果两个不同对象的hashCode相同，这种现象称为冲突，冲突会导致操作哈希表的时间开销增大，所以尽量定义好的hashCode()方法，能加快哈希 表的操作。<br>　　如果相同的对象有不同的hashCode，对哈希表的操作会出现意想不到的结果（期待的get方法返回null），要避免这种问题，只需要牢记一条：要同时复写equals方法和hashCode方法，而不要只写其中一个。<br>　　Hashtable是同步的。</p>
 <p><strong>HashMap类</strong></p>
+<p>hashmap源码详细讲解<a href="http://www.cnblogs.com/ITtangtang/p/3948406.html" target="_blank" rel="external">http://www.cnblogs.com/ITtangtang/p/3948406.html</a></p>
 <p>　　HashMap和Hashtable类似，不同之处在于HashMap是非同步的，并且允许null，即null value和null key。，但是将HashMap视为Collection时（values()方法可返回Collection），其迭代子操作时间开销和HashMap 的容量成比例</p>
 <p><strong>总结</strong>　　如果涉及到堆栈，队列等操作，应该考虑用List，对于需要快速插入，删除元素，应该使用LinkedList，如果需要快速随机访问元素，应该使用ArrayList。<br>　　如果程序在单线程环境中，或者访问仅仅在一个线程中进行，考虑非同步的类，其效率较高，如果多个线程可能同时操作一个类，应该使用同步的类。<br>　　<strong>要特别注意对哈希表的操作，作为key的对象要正确复写equals和hashCode方法。</strong><br>　　尽量返回接口而非实际的类型，如返回List而非ArrayList，这样如果以后需要将ArrayList换成LinkedList时，客户端代码不用改变。这就是针对抽象编程。</p>
 <h4 id="相互区别"><a href="#相互区别" class="headerlink" title="相互区别"></a><strong>相互区别</strong></h4><p><strong>Vector和ArrayList</strong></p>
@@ -413,11 +419,7 @@ Collection是最基本的集">
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">throwable</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">java</a>
+                <a href="javascript:void(0)">API</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -425,7 +427,11 @@ Collection是最基本的集">
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">API</a>
+                <a href="javascript:void(0)">throwable</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">java</a>
               </li>
             
             <div class="clearfix"></div>
