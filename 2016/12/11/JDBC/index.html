@@ -6,24 +6,35 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>multithreading | Carol</title>
+  <title>JDBC（基础整理） | Carol</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="多线程参考进程和线程区别
-1.定义进程是具有一定独立功能的程序关于某个数据集合上的一次运行活动,进程是系统进行资源分配和调度的一个独立单位.
-一个进程中可以包含若干个线程，它们可以利用进程所拥有的资源。在引入线程的操作系统中，通常都是把进程作为分配资源的基本单位，而把线程作为独立运行和独立调度的基本单位。线程是进程的一个实体,是CPU调度和分派的基本单位,它是比进程更小的能独立运行的基本单位.线程">
+  <meta name="description" content="Java Database Connection:java数据库连接技术。
+四种连接方式（只写两种）：
+1 桥连： JDBC-ODBC连接。
+ 2 直连： 直接通过JDBC驱动连接数据库。
+JDBC中的核心接口与类三个核心接口Connection接口：连接数据库接口。负责与数据库之间的连接。
+Statement接口：操作数据库接口，常用的子接口PreparedStatement接口，预处理SQL语">
 <meta property="og:type" content="article">
-<meta property="og:title" content="multithreading">
-<meta property="og:url" content="http://yoursite.com/2016/12/10/multithreading/index.html">
+<meta property="og:title" content="JDBC（基础整理）">
+<meta property="og:url" content="http://yoursite.com/2016/12/11/JDBC/index.html">
 <meta property="og:site_name" content="Carol">
-<meta property="og:description" content="多线程参考进程和线程区别
-1.定义进程是具有一定独立功能的程序关于某个数据集合上的一次运行活动,进程是系统进行资源分配和调度的一个独立单位.
-一个进程中可以包含若干个线程，它们可以利用进程所拥有的资源。在引入线程的操作系统中，通常都是把进程作为分配资源的基本单位，而把线程作为独立运行和独立调度的基本单位。线程是进程的一个实体,是CPU调度和分派的基本单位,它是比进程更小的能独立运行的基本单位.线程">
-<meta property="og:updated_time" content="2016-12-11T01:30:19.250Z">
+<meta property="og:description" content="Java Database Connection:java数据库连接技术。
+四种连接方式（只写两种）：
+1 桥连： JDBC-ODBC连接。
+ 2 直连： 直接通过JDBC驱动连接数据库。
+JDBC中的核心接口与类三个核心接口Connection接口：连接数据库接口。负责与数据库之间的连接。
+Statement接口：操作数据库接口，常用的子接口PreparedStatement接口，预处理SQL语">
+<meta property="og:image" content="http://yoursite.com/\images\DBCP.png">
+<meta property="og:updated_time" content="2016-12-11T12:03:28.052Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="multithreading">
-<meta name="twitter:description" content="多线程参考进程和线程区别
-1.定义进程是具有一定独立功能的程序关于某个数据集合上的一次运行活动,进程是系统进行资源分配和调度的一个独立单位.
-一个进程中可以包含若干个线程，它们可以利用进程所拥有的资源。在引入线程的操作系统中，通常都是把进程作为分配资源的基本单位，而把线程作为独立运行和独立调度的基本单位。线程是进程的一个实体,是CPU调度和分派的基本单位,它是比进程更小的能独立运行的基本单位.线程">
+<meta name="twitter:title" content="JDBC（基础整理）">
+<meta name="twitter:description" content="Java Database Connection:java数据库连接技术。
+四种连接方式（只写两种）：
+1 桥连： JDBC-ODBC连接。
+ 2 直连： 直接通过JDBC驱动连接数据库。
+JDBC中的核心接口与类三个核心接口Connection接口：连接数据库接口。负责与数据库之间的连接。
+Statement接口：操作数据库接口，常用的子接口PreparedStatement接口，预处理SQL语">
+<meta name="twitter:image" content="http://yoursite.com/\images\DBCP.png">
   
     <link rel="alternative" href="/atom.xml" title="Carol" type="application/atom+xml">
   
@@ -139,40 +150,56 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-multithreading" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-JDBC" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      multithreading
+      JDBC（基础整理）
     </h1>
   
 
-        <a href="/2016/12/10/multithreading/" class="archive-article-date">
-  	<time datetime="2016-12-10T14:50:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-10</time>
+        <a href="/2016/12/11/JDBC/" class="archive-article-date">
+  	<time datetime="2016-12-11T07:00:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-11</time>
 </a>
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h2><p>参考<a href="http://blog.csdn.net/yaosiming2011/article/details/44280797" target="_blank" rel="external">进程和线程区别</a></p>
-<h6 id="1-定义"><a href="#1-定义" class="headerlink" title="1.定义"></a>1.定义</h6><p>进程是具有一定独立功能的程序关于某个数据集合上的一次运行活动,进程是系统进行资源分配和调度的一个独立单位.</p>
-<p>一个进程中可以包含若干个线程，它们可以利用进程所拥有的资源。在引入线程的操作系统中，通常都是把进程作为分配资源的基本单位，而把线程作为独立运行和独立调度的基本单位。线程是进程的一个实体,是CPU调度和分派的基本单位,它是比进程更小的能独立运行的基本单位.线程自己基本上不拥有系统资源,只拥有一点在运行中必不可少的资源(如程序计数器,一组寄存器和栈),但是它可与同属一个进程的其他的线程共享进程所拥有的全部资源.</p>
-<p>2.关系</p>
-<p>一个线程可以创建和撤销另一个线程;同一个进程中的多个线程之间可以并发执行.</p>
-<p>相对进程而言，线程是一个更加接近于执行体的概念，它可以与同进程中的其他线程共享数据，但拥有自己的栈空间，拥有独立的执行序列。</p>
-<p>3.区别</p>
-<p>进程和线程的主要差别在于它们是不同的<a href="http://lib.csdn.net/base/operatingsystem" target="_blank" rel="external">操作系统</a>资源管理方式。进程有独立的地址空间，一个进程崩溃后，在保护模式下不会对其它进程产生影响，而线程只是一个进程中的不同执行路径。线程有自己的堆栈和局部变量，但线程之间没有单独的地址空间，一个线程死掉就等于整个进程死掉，所以多进程的程序要比多线程的程序健壮，但在进程切换时，耗费资源较大，效率要差一些。<strong>但对于一些要求同时进行并且又要共享某些变量的并发操作，只能用线程，不能用进程。</strong></p>
-<p><strong>1) 简而言之,一个程序至少有一个进程,一个进程至少有一个线程.</strong></p>
-<p>2) 线程的划分尺度小于进程，使得多线程程序的并发性高。</p>
-<p>3) 另外，进程在执行过程中拥有独立的内存单元，而多个线程共享内存，从而极大地提高了程序的运行效率。</p>
-<p>4) 线程在执行过程中与进程还是有区别的。每个独立的线程有一个程序运行的入口、顺序执行序列和程序的出口。<strong>但是线程不能够独立执行，</strong>必须依存在应用程序中，由应用程序提供多个线程执行控制。</p>
-<p>5) 从逻辑角度来看，多线程的意义在于一个应用程序中，有多个执行部分可以同时执行。但操作系统并没有将多个线程看做多个独立的应用，来实现进程的调度和管理以及资源分配。<strong>这就是进程和线程的重要区别。</strong></p>
-<p>4.优缺点</p>
-<p>线程和进程在使用上各有优缺点：线程执行开销小，但不利于资源的管理和保护；而进程正相反。同时，线程适合于在SMP机器上运行，而进程则可以跨机器迁移。</p>
-<p>线程和进程一样分为五个阶段：创建、就绪、运行、阻塞、终止。</p>
+        <p>Java Database Connection:java数据库连接技术。</p>
+<p>四种连接方式（只写两种）：</p>
+<p>1 桥连： JDBC-ODBC连接。</p>
+<p> 2 直连： 直接通过JDBC驱动连接数据库。</p>
+<h5 id="JDBC中的核心接口与类"><a href="#JDBC中的核心接口与类" class="headerlink" title="JDBC中的核心接口与类"></a>JDBC中的核心接口与类</h5><h6 id="三个核心接口"><a href="#三个核心接口" class="headerlink" title="三个核心接口"></a>三个核心接口</h6><p>Connection接口：连接数据库接口。负责与数据库之间的连接。</p>
+<p>Statement接口：操作数据库接口，常用的子接口PreparedStatement接口，预处理SQL语句。负责执行CRUD命令。</p>
+<pre><code>获得Statement对象
+</code></pre><p>​          Statement stat = conn.createStatement();</p>
+<p>​     执行查询的方法：</p>
+<pre><code>ResultSet rs = stat.executeQuery(SQL);
+</code></pre><p>​    执行增删改的方法:</p>
+<p>​    int i = stat.executeUpdate(SQL);</p>
+<p>ResultSet接口：结果集接口。负责接收查询的结果。</p>
+<p>结果集对象下移一条时调用方法 next();</p>
+<p>​          两个值：BOF , EOF</p>
+<p>​        BOF：第一行的前面。rs对象一开始指向的位置就是BOF。</p>
+<p>​        EOF：最后一行的后面。rs对象的next方法是下移一行，如果移动之  后指向了EOF返回false，表示没有记录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">import java.sql.Connection;</div><div class="line">import java.sql.DriverManager;</div><div class="line">import java.sql.ResultSet;</div><div class="line">import java.sql.Statement;</div><div class="line">import java.util.Date;</div><div class="line">public class Test &#123;</div><div class="line">	public static void main(String[] args) throws Exception &#123;</div><div class="line">		//连接数据库的四大参数项</div><div class="line">		String username = &quot;scott&quot;;</div><div class="line">		String password = &quot;tiger&quot;;</div><div class="line">		String driver_class=&quot;oracle.jdbc.driver.OracleDriver&quot;;//驱动类名称</div><div class="line">		String url = &quot;jdbc:oracle:thin:@localhost:1521:XE&quot;;//连接字符串</div><div class="line">//		1、加载JDBC的驱动-连接哪个数据库产品就加载哪个数据库的JDBC驱动</div><div class="line">		Class.forName(driver_class);</div><div class="line">//		2、创建与数据库之间的连接</div><div class="line">		Connection conn = DriverManager.getConnection(url, username	, password);</div><div class="line">//		3、执行CRUD命令</div><div class="line">		String sql = &quot;select * from emp&quot;;</div><div class="line">		Statement stat = conn.createStatement();</div><div class="line">//		4、如果是查询就处理结果集</div><div class="line">		ResultSet rs = stat.executeQuery(sql);</div><div class="line">		//rs是结果集对象，结果集就是一个二维表格。</div><div class="line">		while(rs.next())&#123;//下一行。如果返回true说明有记录。</div><div class="line">			int empno = rs.getInt(1);</div><div class="line">			String ename = rs.getString(&quot;ename&quot;);</div><div class="line">			Date date = rs.getDate(&quot;hiredate&quot;);</div><div class="line">			System.out.println(empno+&quot;:&quot;+ename+&quot;:&quot;+date);</div><div class="line">		&#125;</div><div class="line">//		5、关闭连接，释放资源</div><div class="line">		rs.close();</div><div class="line">		stat.close();</div><div class="line">		conn.close();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>对数据库进行增删改操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">import java.sql.Connection;</div><div class="line">import java.sql.DriverManager;</div><div class="line">import java.sql.ResultSet;</div><div class="line">import java.sql.Statement;</div><div class="line">import java.util.Date;</div><div class="line"></div><div class="line">public class UpdateTest &#123;</div><div class="line"></div><div class="line">	public static void main(String[] args) throws Exception &#123;</div><div class="line">		//连接数据库的四大参数项</div><div class="line">		String username = &quot;scott&quot;;</div><div class="line">		String password = &quot;tiger&quot;;</div><div class="line">		String driver_class=&quot;oracle.jdbc.driver.OracleDriver&quot;;//驱动类名称</div><div class="line">		String url = &quot;jdbc:oracle:thin:@localhost:1521:XE&quot;;//连接字符串</div><div class="line">//		1、加载JDBC的驱动-连接哪个数据库产品就加载哪个数据库的JDBC驱动</div><div class="line">		Class.forName(driver_class);</div><div class="line">//		2、创建与数据库之间的连接</div><div class="line">		Connection conn = DriverManager.getConnection(url, username	, password);</div><div class="line">		System.out.println(conn);</div><div class="line">//		3、执行CRUD命令</div><div class="line">		String sql = &quot;insert into dept(deptno,dname,loc) values(50 , &apos;总部&apos; ,&apos;北京远洋&apos;)&quot;;</div><div class="line">		Statement stat = conn.createStatement();</div><div class="line">		int count = stat.executeUpdate(sql);//增删改都调用这个方法</div><div class="line">		if(count &gt; 0) &#123;</div><div class="line">			System.out.println(&quot;操作成功！&quot;);</div><div class="line">		&#125;</div><div class="line">//		7.5、关闭连接，释放资源</div><div class="line">		stat.close();</div><div class="line">		conn.close();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>PreparedStatement接口：Statement子接口，预处理SQL语句。</p>
+<h5 id="创建PreparedStatement接口的实例"><a href="#创建PreparedStatement接口的实例" class="headerlink" title="创建PreparedStatement接口的实例"></a>创建PreparedStatement接口的实例</h5><p>String sql = “insert into dept(deptno,dname,loc) values(?,?,?)”;//可以使用?占位符</p>
+<p>PreparedStatementpstat = conn.prepareStatement(sql);</p>
+<p>//为占位符赋值</p>
+<p>pstat.setInt(1, deptno);</p>
+<p>pstat.setString(2, dname);</p>
+<p>pstat.setString(3, loc);</p>
+<p>执行</p>
+<p>pstat.executeUpdate();</p>
+<h3 id="数据库连接池技术"><a href="#数据库连接池技术" class="headerlink" title="数据库连接池技术"></a>数据库连接池技术</h3><h6 id="世面上主流有-DBCP-C3P0"><a href="#世面上主流有-DBCP-C3P0" class="headerlink" title="世面上主流有:DBCP , C3P0"></a>世面上主流有:DBCP , C3P0</h6><h5 id="使用DBCP创建数据库连接对象"><a href="#使用DBCP创建数据库连接对象" class="headerlink" title="使用DBCP创建数据库连接对象"></a>使用DBCP创建数据库连接对象</h5><h5 id=""><a href="#" class="headerlink" title=""></a><img src="\images\DBCP.png" alt="DBCP"></h5><h5 id="设置DBCP连接池参数"><a href="#设置DBCP连接池参数" class="headerlink" title="设置DBCP连接池参数"></a>设置DBCP连接池参数</h5><p> 创建一个资源文件.properteis。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">driverClassName=oracle.jdbc.driver.OracleDriver  url=jdbc:oracle:thin:@localhost:1521:XE </div><div class="line"></div><div class="line">username=scott</div><div class="line"></div><div class="line">  password=tiger</div><div class="line"></div><div class="line">  maxActive=50--最大活动数量</div><div class="line"></div><div class="line">  maxIdle=20 </div><div class="line"></div><div class="line">  --最大空闲数量</div><div class="line"></div><div class="line">  maxWait=60000 --最大等待时间，毫秒。</div></pre></td></tr></table></figure>
+<p>## </p>
 
       
 
@@ -204,7 +231,7 @@
       
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDBC/">JDBC</a></li></ul>
 	</div>
 
       
@@ -257,7 +284,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2016/12/10/multithreading/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2016/12/11/JDBC/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -271,18 +298,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2016/12/11/java1/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          java基础整理
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/12/10/first/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">first</div>
+    <a href="/2016/12/11/java-Throwable/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">java Throwable（基础整理）</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -295,7 +313,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="multithreading" data-title="multithreading" data-url="http://yoursite.com/2016/12/10/multithreading/"></div>
+	<div class="ds-thread" data-thread-key="JDBC" data-title="JDBC（基础整理）" data-url="http://yoursite.com/2016/12/11/JDBC/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

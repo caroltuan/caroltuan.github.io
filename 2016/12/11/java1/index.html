@@ -6,24 +6,38 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>multithreading | Carol</title>
+  <title>java基础整理 | Carol</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="多线程参考进程和线程区别
-1.定义进程是具有一定独立功能的程序关于某个数据集合上的一次运行活动,进程是系统进行资源分配和调度的一个独立单位.
-一个进程中可以包含若干个线程，它们可以利用进程所拥有的资源。在引入线程的操作系统中，通常都是把进程作为分配资源的基本单位，而把线程作为独立运行和独立调度的基本单位。线程是进程的一个实体,是CPU调度和分派的基本单位,它是比进程更小的能独立运行的基本单位.线程">
+  <meta name="description" content="垃圾回收JAVA程序运行过程中，有一个线程叫垃圾回收线程。程序运行了一时间之后很多垃圾信息。回收。
+自动调用。程序员不能控制。1 内存不够。2 CPU空闲。
+
+垃圾：没有被引用的内存空间。
+java运行机制Java先编译后解释型语言。
+源文件(.java)----编译-&amp;gt;类文件(.class)（字节码文件）---解释执行（JVM：java虚拟机）---&amp;gt;机器指令
+JDK(Java De">
 <meta property="og:type" content="article">
-<meta property="og:title" content="multithreading">
-<meta property="og:url" content="http://yoursite.com/2016/12/10/multithreading/index.html">
+<meta property="og:title" content="java基础整理">
+<meta property="og:url" content="http://yoursite.com/2016/12/11/java1/index.html">
 <meta property="og:site_name" content="Carol">
-<meta property="og:description" content="多线程参考进程和线程区别
-1.定义进程是具有一定独立功能的程序关于某个数据集合上的一次运行活动,进程是系统进行资源分配和调度的一个独立单位.
-一个进程中可以包含若干个线程，它们可以利用进程所拥有的资源。在引入线程的操作系统中，通常都是把进程作为分配资源的基本单位，而把线程作为独立运行和独立调度的基本单位。线程是进程的一个实体,是CPU调度和分派的基本单位,它是比进程更小的能独立运行的基本单位.线程">
-<meta property="og:updated_time" content="2016-12-11T01:30:19.250Z">
+<meta property="og:description" content="垃圾回收JAVA程序运行过程中，有一个线程叫垃圾回收线程。程序运行了一时间之后很多垃圾信息。回收。
+自动调用。程序员不能控制。1 内存不够。2 CPU空闲。
+
+垃圾：没有被引用的内存空间。
+java运行机制Java先编译后解释型语言。
+源文件(.java)----编译-&amp;gt;类文件(.class)（字节码文件）---解释执行（JVM：java虚拟机）---&amp;gt;机器指令
+JDK(Java De">
+<meta property="og:image" content="http://yoursite.com/\images\javamodel.png">
+<meta property="og:updated_time" content="2016-12-11T01:57:04.854Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="multithreading">
-<meta name="twitter:description" content="多线程参考进程和线程区别
-1.定义进程是具有一定独立功能的程序关于某个数据集合上的一次运行活动,进程是系统进行资源分配和调度的一个独立单位.
-一个进程中可以包含若干个线程，它们可以利用进程所拥有的资源。在引入线程的操作系统中，通常都是把进程作为分配资源的基本单位，而把线程作为独立运行和独立调度的基本单位。线程是进程的一个实体,是CPU调度和分派的基本单位,它是比进程更小的能独立运行的基本单位.线程">
+<meta name="twitter:title" content="java基础整理">
+<meta name="twitter:description" content="垃圾回收JAVA程序运行过程中，有一个线程叫垃圾回收线程。程序运行了一时间之后很多垃圾信息。回收。
+自动调用。程序员不能控制。1 内存不够。2 CPU空闲。
+
+垃圾：没有被引用的内存空间。
+java运行机制Java先编译后解释型语言。
+源文件(.java)----编译-&amp;gt;类文件(.class)（字节码文件）---解释执行（JVM：java虚拟机）---&amp;gt;机器指令
+JDK(Java De">
+<meta name="twitter:image" content="http://yoursite.com/\images\javamodel.png">
   
     <link rel="alternative" href="/atom.xml" title="Carol" type="application/atom+xml">
   
@@ -139,40 +153,71 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-multithreading" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-java1" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      multithreading
+      java基础整理
     </h1>
   
 
-        <a href="/2016/12/10/multithreading/" class="archive-article-date">
-  	<time datetime="2016-12-10T14:50:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-10</time>
+        <a href="/2016/12/11/java1/" class="archive-article-date">
+  	<time datetime="2016-12-11T01:31:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-11</time>
 </a>
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h2><p>参考<a href="http://blog.csdn.net/yaosiming2011/article/details/44280797" target="_blank" rel="external">进程和线程区别</a></p>
-<h6 id="1-定义"><a href="#1-定义" class="headerlink" title="1.定义"></a>1.定义</h6><p>进程是具有一定独立功能的程序关于某个数据集合上的一次运行活动,进程是系统进行资源分配和调度的一个独立单位.</p>
-<p>一个进程中可以包含若干个线程，它们可以利用进程所拥有的资源。在引入线程的操作系统中，通常都是把进程作为分配资源的基本单位，而把线程作为独立运行和独立调度的基本单位。线程是进程的一个实体,是CPU调度和分派的基本单位,它是比进程更小的能独立运行的基本单位.线程自己基本上不拥有系统资源,只拥有一点在运行中必不可少的资源(如程序计数器,一组寄存器和栈),但是它可与同属一个进程的其他的线程共享进程所拥有的全部资源.</p>
-<p>2.关系</p>
-<p>一个线程可以创建和撤销另一个线程;同一个进程中的多个线程之间可以并发执行.</p>
-<p>相对进程而言，线程是一个更加接近于执行体的概念，它可以与同进程中的其他线程共享数据，但拥有自己的栈空间，拥有独立的执行序列。</p>
-<p>3.区别</p>
-<p>进程和线程的主要差别在于它们是不同的<a href="http://lib.csdn.net/base/operatingsystem" target="_blank" rel="external">操作系统</a>资源管理方式。进程有独立的地址空间，一个进程崩溃后，在保护模式下不会对其它进程产生影响，而线程只是一个进程中的不同执行路径。线程有自己的堆栈和局部变量，但线程之间没有单独的地址空间，一个线程死掉就等于整个进程死掉，所以多进程的程序要比多线程的程序健壮，但在进程切换时，耗费资源较大，效率要差一些。<strong>但对于一些要求同时进行并且又要共享某些变量的并发操作，只能用线程，不能用进程。</strong></p>
-<p><strong>1) 简而言之,一个程序至少有一个进程,一个进程至少有一个线程.</strong></p>
-<p>2) 线程的划分尺度小于进程，使得多线程程序的并发性高。</p>
-<p>3) 另外，进程在执行过程中拥有独立的内存单元，而多个线程共享内存，从而极大地提高了程序的运行效率。</p>
-<p>4) 线程在执行过程中与进程还是有区别的。每个独立的线程有一个程序运行的入口、顺序执行序列和程序的出口。<strong>但是线程不能够独立执行，</strong>必须依存在应用程序中，由应用程序提供多个线程执行控制。</p>
-<p>5) 从逻辑角度来看，多线程的意义在于一个应用程序中，有多个执行部分可以同时执行。但操作系统并没有将多个线程看做多个独立的应用，来实现进程的调度和管理以及资源分配。<strong>这就是进程和线程的重要区别。</strong></p>
-<p>4.优缺点</p>
-<p>线程和进程在使用上各有优缺点：线程执行开销小，但不利于资源的管理和保护；而进程正相反。同时，线程适合于在SMP机器上运行，而进程则可以跨机器迁移。</p>
-<p>线程和进程一样分为五个阶段：创建、就绪、运行、阻塞、终止。</p>
+        <h5 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h5><p>JAVA程序运行过程中，有一个线程叫垃圾回收线程。程序运行了一时间之后很多垃圾信息。回收。</p>
+<pre><code>自动调用。程序员不能控制。1 内存不够。2 CPU空闲。
+
+垃圾：没有被引用的内存空间。
+</code></pre><h5 id="java运行机制"><a href="#java运行机制" class="headerlink" title="java运行机制"></a>java运行机制</h5><p>Java先编译后解释型语言。</p>
+<pre><code>源文件(.java)----编译-&gt;类文件(.class)（字节码文件）---解释执行（JVM：java虚拟机）---&gt;机器指令
+</code></pre><p>JDK(Java Development Kit) Java开发工具包 </p>
+<p>   JDK = JRE + 工具（编译器、调试器、其他工具……） + 类库 </p>
+<p>JRE (Java Runtime Environment)  Java运行时环境 </p>
+<p>  JRE = JVM(Java Virtual Machine) Java虚拟机+解释器 </p>
+<p><img src="\images\javamodel.png" alt="javamodel"></p>
+<p>原始数据类型就只有8个：byte,short,int,long  </p>
+<p>float,double  char   boolean</p>
+<h5 id="String字符串数据类型"><a href="#String字符串数据类型" class="headerlink" title="String字符串数据类型"></a>String字符串数据类型</h5><p>String实际上它是一个类,</p>
+<p>字符串不变性：表示字符串字面量是不会改变的。</p>
+<p>字符串常量池。用来存放字符串常量</p>
+<h5 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h5><p>数组就是保存同一类型的一大堆的变量。</p>
+<p>声明一个数组。   int[] a; 推荐使用。</p>
+<p>数组的异常- ArrayIndexOutOfBoundsException（索引超出范围）</p>
+<p><strong>数组是引用数据类型</strong></p>
+<p>当一个数组给另一个数组，使用数组名称赋值时，实际上是将数组的引用交给另一个数组。</p>
+<p>两个数组使用的是同一块内存，两个数组引用是相同的。</p>
+<p>所以一个数组对数组元素的修改等于两个数组一起改变。</p>
+<h6 id="java-util-Arrays类。封装了针对数组的操作方法。"><a href="#java-util-Arrays类。封装了针对数组的操作方法。" class="headerlink" title="java.util.Arrays类。封装了针对数组的操作方法。"></a>java.util.Arrays类。封装了针对数组的操作方法。</h6><p> sort。排序方法。sort(byte[] a)对指定的 byte 型数组按数字升序进行排序。</p>
+<p>binarySearch(int[]a,int key)</p>
+<pre><code>使用二分搜索法来搜索指定的 int 型数组，以获得指定的值。必须在进行此调用之前对数组进行排序。如果没有对数组进行排序，则结果是不确定的。如果数组包含多个带有指定值的元素，则无法保证找到的是哪一个。 
+</code></pre><p>参数： </p>
+<pre><code>a - 要搜索的数组 
+
+key - 要搜索的值 
+</code></pre><p>返回： </p>
+<pre><code>如果它包含在数组中，则返回搜索键的索引；否则返回 (-(*插入点*) - 1)。*插入点* 被定义为将键插入数组的那一点：即第一个大于此键的元素索引，如果数组中的所有元素都小于指定的键，则为 a.length。注意，这保证了当且仅当此键被找到时，返回的值将 &gt;= 0。
+</code></pre><p>copyOf使用老数组创建一个新的数组。同时拷贝数据。</p>
+<h5 id="二维数组和多维数组"><a href="#二维数组和多维数组" class="headerlink" title="二维数组和多维数组"></a>二维数组和多维数组</h5><p>二维数组是否可以排序？不能，会报ClassCastException异常。</p>
+<h5 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h5><p>为什么要创建函数？</p>
+<pre><code>一个函数代表了一个功能。功能最好单一，独立，不可拆分。
+
+可以重复使用
+
+调用方便
+
+结构清晰，层次更明确，修改容易。
+
+可以利用函数将多层的循环变成多个一层的循环。
+
+为了给我们的程序分模块。
+</code></pre><p>“</p>
 
       
 
@@ -257,7 +302,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2016/12/10/multithreading/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2016/12/11/java1/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -271,18 +316,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2016/12/11/java1/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/12/11/java-oop/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          java基础整理
+          java oop（基础整理）
         
       </div>
     </a>
   
   
-    <a href="/2016/12/10/first/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">first</div>
+    <a href="/2016/12/10/multithreading/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">multithreading</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -295,7 +340,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="multithreading" data-title="multithreading" data-url="http://yoursite.com/2016/12/10/multithreading/"></div>
+	<div class="ds-thread" data-thread-key="java1" data-title="java基础整理" data-url="http://yoursite.com/2016/12/11/java1/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
