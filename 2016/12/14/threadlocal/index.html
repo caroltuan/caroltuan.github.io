@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://yoursite.com">
+  <title>threadlocal | Carol</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="ThreadLocal是解决线程安全问题一个很好的思路，ThreadLocal类中有一个Map，用于存储每一个线程的变量副本，Map中元素的键为线程对象，而值对应线程的变量副本，由于Key值不可重复，每一个“线程对象”对应线程的“变量副本”，而到达了线程安全。
+Spring通过各种DAO模板类降低了开发者使用各种数据持久技术的难度。这些模板类都是线程安全的，也就是说，多个DAO可以复用同一个模板">
+<meta property="og:type" content="article">
+<meta property="og:title" content="threadlocal">
+<meta property="og:url" content="http://yoursite.com/2016/12/14/threadlocal/index.html">
+<meta property="og:site_name" content="Carol">
+<meta property="og:description" content="ThreadLocal是解决线程安全问题一个很好的思路，ThreadLocal类中有一个Map，用于存储每一个线程的变量副本，Map中元素的键为线程对象，而值对应线程的变量副本，由于Key值不可重复，每一个“线程对象”对应线程的“变量副本”，而到达了线程安全。
+Spring通过各种DAO模板类降低了开发者使用各种数据持久技术的难度。这些模板类都是线程安全的，也就是说，多个DAO可以复用同一个模板">
+<meta property="og:updated_time" content="2016-12-14T11:12:55.356Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="threadlocal">
+<meta name="twitter:description" content="ThreadLocal是解决线程安全问题一个很好的思路，ThreadLocal类中有一个Map，用于存储每一个线程的变量副本，Map中元素的键为线程对象，而值对应线程的变量副本，由于Key值不可重复，每一个“线程对象”对应线程的“变量副本”，而到达了线程安全。
+Spring通过各种DAO模板类降低了开发者使用各种数据持久技术的难度。这些模板类都是线程安全的，也就是说，多个DAO可以复用同一个模板">
+  
+    <link rel="alternative" href="/atom.xml" title="Carol" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/avatar.png">
+  
+  <link rel="stylesheet" href="/main.css?v=4.0.0.css">
+  
+
+</head>
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/img/avatar.png" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">caroltuan</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">Carol&#39;s blog</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a data-idx="0" q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a data-idx="1" q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
+    			
+    			
+            
+    			
+    			<a data-idx="2" q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://caroltuan.github.io/" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="weibo" target="_blank" href="http://weibo.com/u/3908875562?refer_flag=1001030102_&is_all=1" title="weibo"><i class="icon-weibo"></i></a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-sort"></i></div>
+  		<h1 class="header-author js-mobile-header hide">caroltuan</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/img/avatar.png" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">caroltuan</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">Carol&#39;s blog</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+		        
+		        	<li><a href="/archives/">所有文章</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://caroltuan.github.io/" title="github"><i class="icon-github"></i></a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/u/3908875562?refer_flag=1001030102_&is_all=1" title="weibo"><i class="icon-weibo"></i></a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-threadlocal" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      threadlocal
+    </h1>
+  
+
+        <a href="/2016/12/14/threadlocal/" class="archive-article-date">
+  	<time datetime="2016-12-14T11:00:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-14</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p> ThreadLocal是解决线程安全问题一个很好的思路，ThreadLocal类中有一个Map，用于存储每一个线程的变量副本，Map中元素的键为线程对象，而值对应线程的变量副本，由于Key值不可重复，每一个“线程对象”对应线程的“变量副本”，而到达了线程安全。</p>
+<p>Spring通过各种DAO模板类降低了开发者使用各种数据持久技术的难度。这些模板类都是线程安全的，也就是说，多个DAO可以复用同一个模板实例而不会发生冲突。</p>
+<p>我们使用模板类访问底层数据，根据持久化技术的不同，模板类需要绑定数据连接或会话的资源。但这些资源本身是非线程安全的，也就是说它们不能在同一时刻被多个线程共享。</p>
+<p>虽然模板类通过资源池获取数据连接或会话，但资源池本身解决的是数据连接或会话的缓存问题，并非数据连接或会话的线程安全问题。</p>
+<p>按照传统经验，如果某个对象是非线程安全的，在多线程环境下，对对象的访问必须采用synchronized进行线程同步。但Spring的DAO模板类并未采用线程同步机制，因为线程同步限制了并发访问，会带来很大的性能损失。</p>
+<p><strong>ThreadLocal**</strong>是什么**</p>
+<p><strong>早在**</strong>JDK 1.2<strong><strong>的版本中就提供</strong></strong>java.lang.ThreadLocal<strong><strong>，</strong></strong>ThreadLocal<strong>**为解决多线程程序的并发问题提供了一种新的思路。使用这个工具类可以很简洁地编写出优美的多线程程序。</strong></p>
+<p><strong>ThreadLocal**</strong>很容易让人望文生义，想当然地认为是一个<strong><strong>“</strong></strong>本地线程<strong><strong>”</strong></strong>。其实，<strong><strong>ThreadLocal</strong></strong>并不是一个<strong><strong>Thread</strong></strong>，而是<strong><strong>Thread</strong></strong>的局部变量，也许把它命名为<strong><strong>ThreadLocalVariable</strong></strong>更容易让人理解一些。**</p>
+<p><strong>当使用**</strong>ThreadLocal<strong><strong>维护变量时，</strong></strong>ThreadLocal<strong>**为每个使用该变量的线程提供独立的变量副本，所以每一个线程都可以独立地改变自己的副本，而不会影响其它线程所对应的副本。</strong></p>
+<p><strong>从线程的角度看，目标变量就象是线程的本地变量，这也是类名中**</strong>“Local”<strong>**所要表达的意思。</strong></p>
+<p><strong>线程局部变量并不是**</strong>Java<strong><strong>的新发明，很多语言（如</strong></strong>IBM IBM XL FORTRAN<strong><strong>）在语法层面就提供线程局部变量。在</strong></strong>Java<strong><strong>中没有提供在语言级支持，而是变相地通过</strong></strong>ThreadLocal<strong>**的类提供支持。</strong></p>
+<p><strong>所以，在**</strong>Java<strong><strong>中编写线程局部变量的代码相对来说要笨拙一些，因此造成线程局部变量没有在</strong></strong>Java<strong>**开发者中得到很好的普及。</strong></p>
+<p><strong>ThreadLocal**</strong>的接口方法**</p>
+<p><strong>ThreadLocal**</strong>类接口很简单，只有<strong><strong>4</strong></strong>个方法，我们先来了解一下：**</p>
+<p><strong>· void set(Object value) </strong></p>
+<p><strong>设置当前线程的线程局部变量的值。</strong></p>
+<p><strong>· public Object get() </strong></p>
+<p><strong>该方法返回当前线程所对应的线程局部变量。</strong></p>
+<p><strong>· public void remove() </strong></p>
+<p><strong>将当前线程局部变量的值删除，目的是为了减少内存的占用，该方法是**</strong>JDK 5.0<strong>**新增的方法。需要指出的是，当线程结束后，对应该线程的局部变量将自动被垃圾回收，所以显式调用该方法清除线程的局部变量并不是必须的操作，但它可以加快内存回收的速度。</strong></p>
+<p><strong>· protected Object initialValue() </strong></p>
+<p><strong>返回该线程局部变量的初始值，该方法是一个**</strong>protected<strong><strong>的方法，显然是为了让子类覆盖而设计的。这个方法是一个延迟调用方法，在线程第</strong></strong>1<strong><strong>次调用</strong></strong>get()<strong><strong>或</strong></strong>set(Object)<strong><strong>时才执行，并且仅执行</strong></strong>1<strong><strong>次。</strong></strong>ThreadLocal<strong><strong>中的缺省实现直接返回一个</strong></strong>null<strong>**。</strong></p>
+<p><strong>值得一提的是，在**</strong>JDK5.0<strong><strong>中，</strong></strong>ThreadLocal<strong><strong>已经支持泛型，该类的类名已经变为</strong></strong>ThreadLocal<strong><strong>。</strong></strong>API<strong><strong>方法也相应进行了调整，新版本的</strong></strong>API<strong><strong>方法分别是</strong></strong>void set(T value)<strong><strong>、</strong></strong>T get()<strong><strong>以及</strong></strong>T initialValue()<strong>**。</strong></p>
+<p><strong>ThreadLocal**</strong>是如何做到为每一个线程维护变量的副本的呢？其实实现的思路很简单：在ThreadLocal类中有一个Map，用于存储每一个线程的变量副本，Map中元素的键为线程对象，而值对应线程的变量副本。我们自己就可以提供一个简单的实现版本：**</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">SimpleThreadLocal</div><div class="line"></div><div class="line">public class SimpleThreadLocal &#123;</div><div class="line"></div><div class="line">private Map valueMap = Collections.synchronizedMap(new HashMap());</div><div class="line"></div><div class="line">public void set(Object newValue) &#123;</div><div class="line"></div><div class="line">valueMap.put(Thread.currentThread(), newValue);①**键为线程对象，值为本线程的变量副本**</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">public Object get() &#123;</div><div class="line"></div><div class="line">Thread currentThread = Thread.currentThread();</div><div class="line"></div><div class="line">Object o = valueMap.get(currentThread);②**返回本线程对应的变量**</div><div class="line"></div><div class="line">if (o == null &amp;&amp; !valueMap.containsKey(currentThread)) &#123;③**如果在Map中不存在，放到Map**</div><div class="line"></div><div class="line">中保存起来。</div><div class="line"></div><div class="line">o = initialValue();</div><div class="line"></div><div class="line">valueMap.put(currentThread, o);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">return o;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">public void remove() &#123;</div><div class="line"></div><div class="line">valueMap.remove(Thread.currentThread());</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">public Object initialValue() &#123;</div><div class="line"></div><div class="line">return null;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>虽然代码清单**</strong>93<strong><strong>这个</strong></strong>ThreadLocal<strong><strong>实现版本显得比较幼稚，但它和</strong></strong>JDK<strong><strong>所提供的</strong></strong>ThreadLocal<strong>**类在实现思路上是相近的。</strong></p>
+<p><strong>一个**</strong>TheadLocal<strong>**实例</strong></p>
+<p><strong>下面，我们通过一个具体的实例了解一下**</strong>ThreadLocal<strong>**的具体使用方法。</strong></p>
+<p><strong>代码清单2 SequenceNumber</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div></pre></td><td class="code"><pre><div class="line">package com.baobaotao.basic;</div><div class="line"></div><div class="line">public class SequenceNumber &#123;</div><div class="line"></div><div class="line">①**通过匿名内部类覆盖ThreadLocal的initialValue()方法，指定初始值**</div><div class="line"></div><div class="line">private static ThreadLocal seqNum = new ThreadLocal()&#123;</div><div class="line"></div><div class="line">public Integer initialValue()&#123;</div><div class="line"></div><div class="line">return 0;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;;</div><div class="line"></div><div class="line">②**获取下一个序列值**</div><div class="line"></div><div class="line">public int getNextNum()&#123;</div><div class="line"></div><div class="line">seqNum.set(seqNum.get()+1);</div><div class="line"></div><div class="line">return seqNum.get();</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">public static void main(String[] args) </div><div class="line"></div><div class="line">&#123;</div><div class="line"></div><div class="line">SequenceNumber sn = new SequenceNumber();</div><div class="line"></div><div class="line">③ 3**个线程共享sn，各自产生序列号**</div><div class="line"></div><div class="line">TestClient t1 = new TestClient(sn);</div><div class="line"></div><div class="line">TestClient t2 = new TestClient(sn);</div><div class="line"></div><div class="line">TestClient t3 = new TestClient(sn);</div><div class="line"></div><div class="line">t1.start();</div><div class="line"></div><div class="line">t2.start();</div><div class="line"></div><div class="line">t3.start();</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">private static class TestClient extends Thread</div><div class="line"></div><div class="line">&#123;</div><div class="line"></div><div class="line">private SequenceNumber sn;</div><div class="line"></div><div class="line">public TestClient(SequenceNumber sn) &#123;</div><div class="line"></div><div class="line">this.sn = sn;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">public void run()</div><div class="line"></div><div class="line">&#123;</div><div class="line"></div><div class="line">for (int i = 0; i &lt; 3; i++) &#123;④**每个线程打出3个序列值**</div><div class="line"></div><div class="line">System.out.println(&quot;thread[&quot;+Thread.currentThread().getName()+</div><div class="line"></div><div class="line">&quot;] sn[&quot;+sn.getNextNum()+&quot;]&quot;);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>通常我们通过匿名内部类的方式定义**</strong>ThreadLocal<strong><strong>的子类，提供初始的变量值，如例子中①处所示。</strong></strong>TestClient<strong><strong>线程产生一组序列号，在③处，我们生成</strong></strong>3<strong><strong>个</strong></strong>TestClient<strong><strong>，它们共享同一个</strong></strong>SequenceNumber<strong>**实例。运行以上代码，在控制台上输出以下的结果：</strong></p>
+<p><strong>thread[Thread-2] sn[1]</strong></p>
+<p><strong>thread[Thread-0] sn[1]</strong></p>
+<p><strong>thread[Thread-1] sn[1]</strong></p>
+<p><strong>thread[Thread-2] sn[2]</strong></p>
+<p><strong>thread[Thread-0] sn[2]</strong></p>
+<p><strong>thread[Thread-1] sn[2]</strong></p>
+<p><strong>thread[Thread-2] sn[3]</strong></p>
+<p><strong>thread[Thread-0] sn[3]</strong></p>
+<p><strong>thread[Thread-1] sn[3]</strong></p>
+<p><strong>考察输出的结果信息，我们发现每个线程所产生的序号虽然都共享同一个**</strong>SequenceNumber<strong><strong>实例，但它们并没有发生相互干扰的情况，而是各自产生独立的序列号，这是因为我们通过</strong></strong>ThreadLocal<strong>**为每一个线程提供了单独的副本。</strong></p>
+<p><strong>Thread**</strong>同步机制的比较**</p>
+<p><strong>ThreadLocal**</strong>和线程同步机制相比有什么优势呢？<strong><strong>ThreadLocal</strong></strong>和线程同步机制都是为了解决多线程中相同变量的访问冲突问题。**</p>
+<p><strong>在同步机制中，通过对象的锁机制保证同一时间只有一个线程访问变量。这时该变量是多个线程共享的，使用同步机制要求程序慎密地分析什么时候对变量进行读写，什么时候需要锁定某个对象，什么时候释放对象锁等繁杂的问题，程序设计和编写难度相对较大。</strong></p>
+<p><strong>而**</strong>ThreadLocal<strong><strong>则从另一个角度来解决多线程的并发访问。</strong></strong>ThreadLocal<strong><strong>会为每一个线程提供一个独立的变量副本，从而隔离了多个线程对数据的访问冲突。因为每一个线程都拥有自己的变量副本，从而也就没有必要对该变量进行同步了。</strong></strong>ThreadLocal<strong><strong>提供了线程安全的共享对象，在编写多线程代码时，可以把不安全的变量封装进</strong></strong>ThreadLocal<strong>**。</strong></p>
+<p>当然ThreadLocal并不能替代同步机制，两者面向的问题领域不同。同步机制是为了同步多个线程对相同资源的并发访问，是为了多个线程之间进行通信的有效方式；而ThreadLocal是隔离多个线程的数据共享，从根本上就不在多个线程之间共享资源（变量），这样当然不需要对多个线程进行同步了。所以，如果你需要进行多个线程之间进行通信，则使用同步机制；如果需要隔离多个线程之间的共享冲突，可以使用ThreadLocal，这将极大地简化你的程序，使程序更加易读、简洁。</p>
+<p><strong>由于**</strong>ThreadLocal<strong><strong>中可以持有任何类型的对象，低版本</strong></strong>JDK<strong><strong>所提供的</strong></strong>get()<strong><strong>返回的是</strong></strong>Object<strong><strong>对象，需要强制类型转换。但</strong></strong>JDK 5.0<strong><strong>通过泛型很好的解决了这个问题，在一定程度地简化</strong></strong>ThreadLocal<strong><strong>的使用，代码清单 </strong></strong>9 2<strong><strong>就使用了</strong></strong>JDK 5.0<strong><strong>新的</strong></strong>ThreadLocal<strong>**版本。</strong></p>
+<p><strong>概括起来说，对于多线程资源共享的问题，同步机制采用了**</strong>“<strong><strong>以时间换空间</strong></strong>”<strong><strong>的方式，而</strong></strong>ThreadLocal<strong><strong>采用了</strong></strong>“<strong><strong>以空间换时间</strong></strong>”<strong>**的方式。前者仅提供一份变量，让不同的线程排队访问，而后者为每一个线程都提供了一份变量，因此可以同时访问而互不影响。</strong></p>
+<p><strong>Spring**</strong>使用<strong><strong>ThreadLocal</strong></strong>解决线程安全问题**</p>
+<p><strong>我们知道在一般情况下，只有无状态的**</strong>Bean<strong><strong>才可以在多线程环境下共享，在</strong></strong>Spring<strong><strong>中，绝大部分</strong></strong>Bean<strong><strong>都可以声明为</strong></strong>singleton<strong><strong>作用域。就是因为</strong></strong>Spring<strong><strong>对一些</strong></strong>Bean<strong><strong>（如</strong></strong>RequestContextHolder<strong><strong>、</strong></strong>TransactionSynchronizationManager<strong><strong>、</strong></strong>LocaleContextHolder<strong><strong>等）中非线程安全状态采用</strong></strong>ThreadLocal<strong><strong>进行处理，让它们也成为线程安全的状态，因为有状态的</strong></strong>Bean<strong>**就可以在多线程中共享了。</strong></p>
+<p><strong>一般的**</strong>Web<strong>**应用划分为展现层、服务层和持久层三个层次，在不同的层中编写对应的逻辑，下层通过接口向上层开放功能调用。在一般情况下，从接收请求到返回响应所经过的所有程序调用都同属于一个线程</strong></p>
+<p><strong>这样你就可以根据需要，将一些非线程安全的变量以**</strong>ThreadLocal<strong>**存放，在同一次请求响应的调用线程中，所有关联的对象引用到的都是同一个变量。</strong></p>
+<p><strong>下面的实例能够体现**</strong>Spring<strong><strong>对有状态</strong></strong>Bean<strong>**的改造思路：</strong></p>
+<p><strong>代码清单**</strong>3 TopicDao：非线程安全**</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class TopicDao &#123;</div><div class="line"></div><div class="line">private Connection conn;①**一个非线程安全的变量**</div><div class="line"></div><div class="line">public void addTopic()&#123;</div><div class="line"></div><div class="line">Statement stat = conn.createStatement();②**引用非线程安全变量**</div><div class="line"></div><div class="line">…</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>由于①处的**</strong>conn<strong><strong>是成员变量，因为</strong></strong>addTopic()<strong><strong>方法是非线程安全的，必须在使用时创建一个新</strong></strong>TopicDao<strong><strong>实例（非</strong></strong>singleton<strong><strong>）。下面使用</strong></strong>ThreadLocal<strong><strong>对</strong></strong>conn<strong><strong>这个非线程安全的</strong></strong>“<strong><strong>状态</strong></strong>”<strong>**进行改造：</strong></p>
+<p><strong>代码清单**</strong>4 TopicDao<strong>**：线程安全</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">import java.sql.Connection;</div><div class="line"></div><div class="line">import java.sql.Statement;</div><div class="line"></div><div class="line">public class TopicDao &#123;</div><div class="line"></div><div class="line">①**使用ThreadLocal保存Connection变量**</div><div class="line"></div><div class="line">private static ThreadLocal connThreadLocal = new ThreadLocal();</div><div class="line"></div><div class="line">public static Connection getConnection()&#123;</div><div class="line"></div><div class="line">②**如果connThreadLocal没有本线程对应的Connection创建一个新的Connection，**</div><div class="line"></div><div class="line">并将其保存到线程本地变量中。</div><div class="line"></div><div class="line">if (connThreadLocal.get() == null) &#123;</div><div class="line"></div><div class="line">Connection conn = ConnectionManager.getConnection();</div><div class="line"></div><div class="line">connThreadLocal.set(conn);</div><div class="line"></div><div class="line">return conn;</div><div class="line"></div><div class="line">&#125;else&#123;</div><div class="line"></div><div class="line">return connThreadLocal.get();③**直接返回线程本地变量**</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">public void addTopic() &#123;</div><div class="line"></div><div class="line">④**从ThreadLocal中获取线程对应的Connection**</div><div class="line"></div><div class="line">Statement stat = getConnection().createStatement();</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>不同的线程在使用**</strong>TopicDao<strong><strong>时，先判断</strong></strong>connThreadLocal.get()<strong><strong>是否是</strong></strong>null<strong><strong>，如果是</strong></strong>null<strong><strong>，则说明当前线程还没有对应的</strong></strong>Connection<strong><strong>对象，这时创建一个</strong></strong>Connection<strong><strong>对象并添加到本地线程变量中；如果不为</strong></strong>null<strong><strong>，则说明当前的线程已经拥有了</strong></strong>Connection<strong><strong>对象，直接使用就可以了。这样，就保证了不同的线程使用线程相关的</strong></strong>Connection<strong><strong>，而不会使用其它线程的</strong></strong>Connection<strong><strong>。因此，这个</strong></strong>TopicDao<strong><strong>就可以做到</strong></strong>singleton<strong>**共享了。</strong></p>
+<p><strong>当然，这个例子本身很粗糙，将**</strong>Connection<strong><strong>的</strong></strong>ThreadLocal<strong><strong>直接放在</strong></strong>DAO<strong><strong>只能做到本</strong></strong>DAO<strong><strong>的多个方法共享</strong></strong>Connection<strong><strong>时不发生线程安全问题，但无法和其它</strong></strong>DAO<strong><strong>共用同一个</strong></strong>Connection<strong><strong>，要做到同一事务多</strong></strong>DAO<strong><strong>共享同一</strong></strong>Connection<strong><strong>，必须在一个共同的外部类使用</strong></strong>ThreadLocal<strong><strong>保存</strong></strong>Connection<strong><strong>。但这个实例基本上说明了</strong></strong>Spring<strong>**对有状态类线程安全化的解决思路。</strong></p>
+<p><strong>小结</strong></p>
+<p><strong>ThreadLocal**</strong>是解决线程安全问题一个很好的思路，它通过为每个线程提供一个独立的变量副本解决了变量并发访问的冲突问题。在很多情况下，<strong><strong>ThreadLocal</strong></strong>比直接使用<strong><strong>synchronized</strong></strong>同步机制解决线程安全问题更简单，更方便，且结果程序拥有更高的并发性。**</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li></ul>
+	</div>
+
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2016/12/14/threadlocal/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2016/12/11/JDBC/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">JDBC（基础整理）</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="threadlocal" data-title="threadlocal" data-url="http://yoursite.com/2016/12/14/threadlocal/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+    var duoshuoQuery = {short_name:"caroltuan"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 caroltuan
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: false,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true
+	}
+</script>
+
+<script src="/./main.js?v=4.0.0.js"></script>
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">learning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">API</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">javaoop</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">JDBC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">throwable</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">多线程</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            2、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: true
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-friends" q-show="friends">
+  		
+        <ul class="search-ul">
+          
+            <li class="search-li">
+              <a href="http://shinerio.cc" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>自恋瑞的blog</a>
+            </li>
+          
+        </ul>
+  		
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">一只团&lt;br&gt;&lt;br&gt;一只想要认真学习的团</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

@@ -131,6 +131,121 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-threadlocal" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/14/threadlocal/">threadlocal</a>
+    </h1>
+  
+
+        <a href="/2016/12/14/threadlocal/" class="archive-article-date">
+  	<time datetime="2016-12-14T11:00:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-14</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p> ThreadLocal是解决线程安全问题一个很好的思路，ThreadLocal类中有一个Map，用于存储每一个线程的变量副本，Map中元素的键为线程对象，而值对应线程的变量副本，由于Key值不可重复，每一个“线程对象”对应线程的“变量副本”，而到达了线程安全。</p>
+<p>Spring通过各种DAO模板类降低了开发者使用各种数据持久技术的难度。这些模板类都是线程安全的，也就是说，多个DAO可以复用同一个模板实例而不会发生冲突。</p>
+<p>我们使用模板类访问底层数据，根据持久化技术的不同，模板类需要绑定数据连接或会话的资源。但这些资源本身是非线程安全的，也就是说它们不能在同一时刻被多个线程共享。</p>
+<p>虽然模板类通过资源池获取数据连接或会话，但资源池本身解决的是数据连接或会话的缓存问题，并非数据连接或会话的线程安全问题。</p>
+<p>按照传统经验，如果某个对象是非线程安全的，在多线程环境下，对对象的访问必须采用synchronized进行线程同步。但Spring的DAO模板类并未采用线程同步机制，因为线程同步限制了并发访问，会带来很大的性能损失。</p>
+<p><strong>ThreadLocal**</strong>是什么**</p>
+<p><strong>早在**</strong>JDK 1.2<strong><strong>的版本中就提供</strong></strong>java.lang.ThreadLocal<strong><strong>，</strong></strong>ThreadLocal<strong>**为解决多线程程序的并发问题提供了一种新的思路。使用这个工具类可以很简洁地编写出优美的多线程程序。</strong></p>
+<p><strong>ThreadLocal**</strong>很容易让人望文生义，想当然地认为是一个<strong><strong>“</strong></strong>本地线程<strong><strong>”</strong></strong>。其实，<strong><strong>ThreadLocal</strong></strong>并不是一个<strong><strong>Thread</strong></strong>，而是<strong><strong>Thread</strong></strong>的局部变量，也许把它命名为<strong><strong>ThreadLocalVariable</strong></strong>更容易让人理解一些。**</p>
+<p><strong>当使用**</strong>ThreadLocal<strong><strong>维护变量时，</strong></strong>ThreadLocal<strong>**为每个使用该变量的线程提供独立的变量副本，所以每一个线程都可以独立地改变自己的副本，而不会影响其它线程所对应的副本。</strong></p>
+<p><strong>从线程的角度看，目标变量就象是线程的本地变量，这也是类名中**</strong>“Local”<strong>**所要表达的意思。</strong></p>
+<p><strong>线程局部变量并不是**</strong>Java<strong><strong>的新发明，很多语言（如</strong></strong>IBM IBM XL FORTRAN<strong><strong>）在语法层面就提供线程局部变量。在</strong></strong>Java<strong><strong>中没有提供在语言级支持，而是变相地通过</strong></strong>ThreadLocal<strong>**的类提供支持。</strong></p>
+<p><strong>所以，在**</strong>Java<strong><strong>中编写线程局部变量的代码相对来说要笨拙一些，因此造成线程局部变量没有在</strong></strong>Java<strong>**开发者中得到很好的普及。</strong></p>
+<p><strong>ThreadLocal**</strong>的接口方法**</p>
+<p><strong>ThreadLocal**</strong>类接口很简单，只有<strong><strong>4</strong></strong>个方法，我们先来了解一下：**</p>
+<p><strong>· void set(Object value) </strong></p>
+<p><strong>设置当前线程的线程局部变量的值。</strong></p>
+<p><strong>· public Object get() </strong></p>
+<p><strong>该方法返回当前线程所对应的线程局部变量。</strong></p>
+<p><strong>· public void remove() </strong></p>
+<p><strong>将当前线程局部变量的值删除，目的是为了减少内存的占用，该方法是**</strong>JDK 5.0<strong>**新增的方法。需要指出的是，当线程结束后，对应该线程的局部变量将自动被垃圾回收，所以显式调用该方法清除线程的局部变量并不是必须的操作，但它可以加快内存回收的速度。</strong></p>
+<p><strong>· protected Object initialValue() </strong></p>
+<p><strong>返回该线程局部变量的初始值，该方法是一个**</strong>protected<strong><strong>的方法，显然是为了让子类覆盖而设计的。这个方法是一个延迟调用方法，在线程第</strong></strong>1<strong><strong>次调用</strong></strong>get()<strong><strong>或</strong></strong>set(Object)<strong><strong>时才执行，并且仅执行</strong></strong>1<strong><strong>次。</strong></strong>ThreadLocal<strong><strong>中的缺省实现直接返回一个</strong></strong>null<strong>**。</strong></p>
+<p><strong>值得一提的是，在**</strong>JDK5.0<strong><strong>中，</strong></strong>ThreadLocal<strong><strong>已经支持泛型，该类的类名已经变为</strong></strong>ThreadLocal<strong><strong>。</strong></strong>API<strong><strong>方法也相应进行了调整，新版本的</strong></strong>API<strong><strong>方法分别是</strong></strong>void set(T value)<strong><strong>、</strong></strong>T get()<strong><strong>以及</strong></strong>T initialValue()<strong>**。</strong></p>
+<p><strong>ThreadLocal**</strong>是如何做到为每一个线程维护变量的副本的呢？其实实现的思路很简单：在ThreadLocal类中有一个Map，用于存储每一个线程的变量副本，Map中元素的键为线程对象，而值对应线程的变量副本。我们自己就可以提供一个简单的实现版本：**</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">SimpleThreadLocal</div><div class="line"></div><div class="line">public class SimpleThreadLocal &#123;</div><div class="line"></div><div class="line">private Map valueMap = Collections.synchronizedMap(new HashMap());</div><div class="line"></div><div class="line">public void set(Object newValue) &#123;</div><div class="line"></div><div class="line">valueMap.put(Thread.currentThread(), newValue);①**键为线程对象，值为本线程的变量副本**</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">public Object get() &#123;</div><div class="line"></div><div class="line">Thread currentThread = Thread.currentThread();</div><div class="line"></div><div class="line">Object o = valueMap.get(currentThread);②**返回本线程对应的变量**</div><div class="line"></div><div class="line">if (o == null &amp;&amp; !valueMap.containsKey(currentThread)) &#123;③**如果在Map中不存在，放到Map**</div><div class="line"></div><div class="line">中保存起来。</div><div class="line"></div><div class="line">o = initialValue();</div><div class="line"></div><div class="line">valueMap.put(currentThread, o);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">return o;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">public void remove() &#123;</div><div class="line"></div><div class="line">valueMap.remove(Thread.currentThread());</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">public Object initialValue() &#123;</div><div class="line"></div><div class="line">return null;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>虽然代码清单**</strong>93<strong><strong>这个</strong></strong>ThreadLocal<strong><strong>实现版本显得比较幼稚，但它和</strong></strong>JDK<strong><strong>所提供的</strong></strong>ThreadLocal<strong>**类在实现思路上是相近的。</strong></p>
+<p><strong>一个**</strong>TheadLocal<strong>**实例</strong></p>
+<p><strong>下面，我们通过一个具体的实例了解一下**</strong>ThreadLocal<strong>**的具体使用方法。</strong></p>
+<p><strong>代码清单2 SequenceNumber</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div></pre></td><td class="code"><pre><div class="line">package com.baobaotao.basic;</div><div class="line"></div><div class="line">public class SequenceNumber &#123;</div><div class="line"></div><div class="line">①**通过匿名内部类覆盖ThreadLocal的initialValue()方法，指定初始值**</div><div class="line"></div><div class="line">private static ThreadLocal seqNum = new ThreadLocal()&#123;</div><div class="line"></div><div class="line">public Integer initialValue()&#123;</div><div class="line"></div><div class="line">return 0;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;;</div><div class="line"></div><div class="line">②**获取下一个序列值**</div><div class="line"></div><div class="line">public int getNextNum()&#123;</div><div class="line"></div><div class="line">seqNum.set(seqNum.get()+1);</div><div class="line"></div><div class="line">return seqNum.get();</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">public static void main(String[] args) </div><div class="line"></div><div class="line">&#123;</div><div class="line"></div><div class="line">SequenceNumber sn = new SequenceNumber();</div><div class="line"></div><div class="line">③ 3**个线程共享sn，各自产生序列号**</div><div class="line"></div><div class="line">TestClient t1 = new TestClient(sn);</div><div class="line"></div><div class="line">TestClient t2 = new TestClient(sn);</div><div class="line"></div><div class="line">TestClient t3 = new TestClient(sn);</div><div class="line"></div><div class="line">t1.start();</div><div class="line"></div><div class="line">t2.start();</div><div class="line"></div><div class="line">t3.start();</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">private static class TestClient extends Thread</div><div class="line"></div><div class="line">&#123;</div><div class="line"></div><div class="line">private SequenceNumber sn;</div><div class="line"></div><div class="line">public TestClient(SequenceNumber sn) &#123;</div><div class="line"></div><div class="line">this.sn = sn;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">public void run()</div><div class="line"></div><div class="line">&#123;</div><div class="line"></div><div class="line">for (int i = 0; i &lt; 3; i++) &#123;④**每个线程打出3个序列值**</div><div class="line"></div><div class="line">System.out.println(&quot;thread[&quot;+Thread.currentThread().getName()+</div><div class="line"></div><div class="line">&quot;] sn[&quot;+sn.getNextNum()+&quot;]&quot;);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>通常我们通过匿名内部类的方式定义**</strong>ThreadLocal<strong><strong>的子类，提供初始的变量值，如例子中①处所示。</strong></strong>TestClient<strong><strong>线程产生一组序列号，在③处，我们生成</strong></strong>3<strong><strong>个</strong></strong>TestClient<strong><strong>，它们共享同一个</strong></strong>SequenceNumber<strong>**实例。运行以上代码，在控制台上输出以下的结果：</strong></p>
+<p><strong>thread[Thread-2] sn[1]</strong></p>
+<p><strong>thread[Thread-0] sn[1]</strong></p>
+<p><strong>thread[Thread-1] sn[1]</strong></p>
+<p><strong>thread[Thread-2] sn[2]</strong></p>
+<p><strong>thread[Thread-0] sn[2]</strong></p>
+<p><strong>thread[Thread-1] sn[2]</strong></p>
+<p><strong>thread[Thread-2] sn[3]</strong></p>
+<p><strong>thread[Thread-0] sn[3]</strong></p>
+<p><strong>thread[Thread-1] sn[3]</strong></p>
+<p><strong>考察输出的结果信息，我们发现每个线程所产生的序号虽然都共享同一个**</strong>SequenceNumber<strong><strong>实例，但它们并没有发生相互干扰的情况，而是各自产生独立的序列号，这是因为我们通过</strong></strong>ThreadLocal<strong>**为每一个线程提供了单独的副本。</strong></p>
+<p><strong>Thread**</strong>同步机制的比较**</p>
+<p><strong>ThreadLocal**</strong>和线程同步机制相比有什么优势呢？<strong><strong>ThreadLocal</strong></strong>和线程同步机制都是为了解决多线程中相同变量的访问冲突问题。**</p>
+<p><strong>在同步机制中，通过对象的锁机制保证同一时间只有一个线程访问变量。这时该变量是多个线程共享的，使用同步机制要求程序慎密地分析什么时候对变量进行读写，什么时候需要锁定某个对象，什么时候释放对象锁等繁杂的问题，程序设计和编写难度相对较大。</strong></p>
+<p><strong>而**</strong>ThreadLocal<strong><strong>则从另一个角度来解决多线程的并发访问。</strong></strong>ThreadLocal<strong><strong>会为每一个线程提供一个独立的变量副本，从而隔离了多个线程对数据的访问冲突。因为每一个线程都拥有自己的变量副本，从而也就没有必要对该变量进行同步了。</strong></strong>ThreadLocal<strong><strong>提供了线程安全的共享对象，在编写多线程代码时，可以把不安全的变量封装进</strong></strong>ThreadLocal<strong>**。</strong></p>
+<p>当然ThreadLocal并不能替代同步机制，两者面向的问题领域不同。同步机制是为了同步多个线程对相同资源的并发访问，是为了多个线程之间进行通信的有效方式；而ThreadLocal是隔离多个线程的数据共享，从根本上就不在多个线程之间共享资源（变量），这样当然不需要对多个线程进行同步了。所以，如果你需要进行多个线程之间进行通信，则使用同步机制；如果需要隔离多个线程之间的共享冲突，可以使用ThreadLocal，这将极大地简化你的程序，使程序更加易读、简洁。</p>
+<p><strong>由于**</strong>ThreadLocal<strong><strong>中可以持有任何类型的对象，低版本</strong></strong>JDK<strong><strong>所提供的</strong></strong>get()<strong><strong>返回的是</strong></strong>Object<strong><strong>对象，需要强制类型转换。但</strong></strong>JDK 5.0<strong><strong>通过泛型很好的解决了这个问题，在一定程度地简化</strong></strong>ThreadLocal<strong><strong>的使用，代码清单 </strong></strong>9 2<strong><strong>就使用了</strong></strong>JDK 5.0<strong><strong>新的</strong></strong>ThreadLocal<strong>**版本。</strong></p>
+<p><strong>概括起来说，对于多线程资源共享的问题，同步机制采用了**</strong>“<strong><strong>以时间换空间</strong></strong>”<strong><strong>的方式，而</strong></strong>ThreadLocal<strong><strong>采用了</strong></strong>“<strong><strong>以空间换时间</strong></strong>”<strong>**的方式。前者仅提供一份变量，让不同的线程排队访问，而后者为每一个线程都提供了一份变量，因此可以同时访问而互不影响。</strong></p>
+<p><strong>Spring**</strong>使用<strong><strong>ThreadLocal</strong></strong>解决线程安全问题**</p>
+<p><strong>我们知道在一般情况下，只有无状态的**</strong>Bean<strong><strong>才可以在多线程环境下共享，在</strong></strong>Spring<strong><strong>中，绝大部分</strong></strong>Bean<strong><strong>都可以声明为</strong></strong>singleton<strong><strong>作用域。就是因为</strong></strong>Spring<strong><strong>对一些</strong></strong>Bean<strong><strong>（如</strong></strong>RequestContextHolder<strong><strong>、</strong></strong>TransactionSynchronizationManager<strong><strong>、</strong></strong>LocaleContextHolder<strong><strong>等）中非线程安全状态采用</strong></strong>ThreadLocal<strong><strong>进行处理，让它们也成为线程安全的状态，因为有状态的</strong></strong>Bean<strong>**就可以在多线程中共享了。</strong></p>
+<p><strong>一般的**</strong>Web<strong>**应用划分为展现层、服务层和持久层三个层次，在不同的层中编写对应的逻辑，下层通过接口向上层开放功能调用。在一般情况下，从接收请求到返回响应所经过的所有程序调用都同属于一个线程</strong></p>
+<p><strong>这样你就可以根据需要，将一些非线程安全的变量以**</strong>ThreadLocal<strong>**存放，在同一次请求响应的调用线程中，所有关联的对象引用到的都是同一个变量。</strong></p>
+<p><strong>下面的实例能够体现**</strong>Spring<strong><strong>对有状态</strong></strong>Bean<strong>**的改造思路：</strong></p>
+<p><strong>代码清单**</strong>3 TopicDao：非线程安全**</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class TopicDao &#123;</div><div class="line"></div><div class="line">private Connection conn;①**一个非线程安全的变量**</div><div class="line"></div><div class="line">public void addTopic()&#123;</div><div class="line"></div><div class="line">Statement stat = conn.createStatement();②**引用非线程安全变量**</div><div class="line"></div><div class="line">…</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>由于①处的**</strong>conn<strong><strong>是成员变量，因为</strong></strong>addTopic()<strong><strong>方法是非线程安全的，必须在使用时创建一个新</strong></strong>TopicDao<strong><strong>实例（非</strong></strong>singleton<strong><strong>）。下面使用</strong></strong>ThreadLocal<strong><strong>对</strong></strong>conn<strong><strong>这个非线程安全的</strong></strong>“<strong><strong>状态</strong></strong>”<strong>**进行改造：</strong></p>
+<p><strong>代码清单**</strong>4 TopicDao<strong>**：线程安全</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">import java.sql.Connection;</div><div class="line"></div><div class="line">import java.sql.Statement;</div><div class="line"></div><div class="line">public class TopicDao &#123;</div><div class="line"></div><div class="line">①**使用ThreadLocal保存Connection变量**</div><div class="line"></div><div class="line">private static ThreadLocal connThreadLocal = new ThreadLocal();</div><div class="line"></div><div class="line">public static Connection getConnection()&#123;</div><div class="line"></div><div class="line">②**如果connThreadLocal没有本线程对应的Connection创建一个新的Connection，**</div><div class="line"></div><div class="line">并将其保存到线程本地变量中。</div><div class="line"></div><div class="line">if (connThreadLocal.get() == null) &#123;</div><div class="line"></div><div class="line">Connection conn = ConnectionManager.getConnection();</div><div class="line"></div><div class="line">connThreadLocal.set(conn);</div><div class="line"></div><div class="line">return conn;</div><div class="line"></div><div class="line">&#125;else&#123;</div><div class="line"></div><div class="line">return connThreadLocal.get();③**直接返回线程本地变量**</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">public void addTopic() &#123;</div><div class="line"></div><div class="line">④**从ThreadLocal中获取线程对应的Connection**</div><div class="line"></div><div class="line">Statement stat = getConnection().createStatement();</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>不同的线程在使用**</strong>TopicDao<strong><strong>时，先判断</strong></strong>connThreadLocal.get()<strong><strong>是否是</strong></strong>null<strong><strong>，如果是</strong></strong>null<strong><strong>，则说明当前线程还没有对应的</strong></strong>Connection<strong><strong>对象，这时创建一个</strong></strong>Connection<strong><strong>对象并添加到本地线程变量中；如果不为</strong></strong>null<strong><strong>，则说明当前的线程已经拥有了</strong></strong>Connection<strong><strong>对象，直接使用就可以了。这样，就保证了不同的线程使用线程相关的</strong></strong>Connection<strong><strong>，而不会使用其它线程的</strong></strong>Connection<strong><strong>。因此，这个</strong></strong>TopicDao<strong><strong>就可以做到</strong></strong>singleton<strong>**共享了。</strong></p>
+<p><strong>当然，这个例子本身很粗糙，将**</strong>Connection<strong><strong>的</strong></strong>ThreadLocal<strong><strong>直接放在</strong></strong>DAO<strong><strong>只能做到本</strong></strong>DAO<strong><strong>的多个方法共享</strong></strong>Connection<strong><strong>时不发生线程安全问题，但无法和其它</strong></strong>DAO<strong><strong>共用同一个</strong></strong>Connection<strong><strong>，要做到同一事务多</strong></strong>DAO<strong><strong>共享同一</strong></strong>Connection<strong><strong>，必须在一个共同的外部类使用</strong></strong>ThreadLocal<strong><strong>保存</strong></strong>Connection<strong><strong>。但这个实例基本上说明了</strong></strong>Spring<strong>**对有状态类线程安全化的解决思路。</strong></p>
+<p><strong>小结</strong></p>
+<p><strong>ThreadLocal**</strong>是解决线程安全问题一个很好的思路，它通过为每个线程提供一个独立的变量副本解决了变量并发访问的冲突问题。在很多情况下，<strong><strong>ThreadLocal</strong></strong>比直接使用<strong><strong>synchronized</strong></strong>同步机制解决线程安全问题更简单，更方便，且结果程序拥有更高的并发性。**</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/多线程/">多线程</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/12/14/threadlocal/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-JDBC" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -150,6 +265,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>Java Database Connection:java数据库连接技术。</p>
+<p>查看详情</p>
 <p>四种连接方式（只写两种）：</p>
 <p>1 桥连： JDBC-ODBC连接。</p>
 <p> 2 直连： 直接通过JDBC驱动连接数据库。</p>
@@ -694,6 +810,97 @@ key - 要搜索的值
 <p>4.优缺点</p>
 <p>线程和进程在使用上各有优缺点：线程执行开销小，但不利于资源的管理和保护；而进程正相反。同时，线程适合于在SMP机器上运行，而进程则可以跨机器迁移。</p>
 <p>线程和进程一样分为五个阶段：创建、就绪、运行、阻塞、终止。</p>
+<p><a href="http://blog.csdn.net/ITMagic_Jack/article/details/6196939" target="_blank" rel="external">http://blog.csdn.net/ITMagic_Jack/article/details/6196939</a></p>
+<h4 id="二：在Java中实现多线程"><a href="#二：在Java中实现多线程" class="headerlink" title="二：在Java中实现多线程"></a>二：在<strong>Java</strong>中实现多线程</h4><p>继承 Thread 类，覆盖方法 run()： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">[java] view plain copy</div><div class="line"></div><div class="line">1.     public class FishMeThread extends Thread &#123;  </div><div class="line"></div><div class="line">2.       </div><div class="line"></div><div class="line">3.           int count= 1, number;  </div><div class="line"></div><div class="line">4.            </div><div class="line"></div><div class="line">5.           public FishMeThread(int num) &#123;  </div><div class="line"></div><div class="line">6.                 number = num;  </div><div class="line"></div><div class="line">7.                 System.out.println(&quot;创建线程 &quot; + number);  </div><div class="line"></div><div class="line">8.           &#125;  </div><div class="line"></div><div class="line">9.       </div><div class="line"></div><div class="line">10.       public void run() &#123;  </div><div class="line"></div><div class="line">11.             while(true) &#123;  </div><div class="line"></div><div class="line">12.                  System.out.println(&quot;线程 &quot; + number + &quot;:计数 &quot; + count);  </div><div class="line"></div><div class="line">13.                  if(++count== 6) return;  </div><div class="line"></div><div class="line">14.             &#125;  </div><div class="line"></div><div class="line">15.       &#125;  </div><div class="line"></div><div class="line">16.   </div><div class="line"></div><div class="line">17.       public static void main(String args[]) &#123;  </div><div class="line"></div><div class="line">18.             for(int i = 0; i &lt; 5; i++) &#123;  </div><div class="line"></div><div class="line">19.                   new FishMeThread(i + 1).start();  </div><div class="line"></div><div class="line">20.             &#125;   </div><div class="line"></div><div class="line">21.       &#125;  </div><div class="line"></div><div class="line">22.   </div><div class="line"></div><div class="line">23. &#125;</div></pre></td></tr></table></figure>
+<pre><code>方法二：实现 Runnable 接口：  
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">[java] view plain copy</div><div class="line"></div><div class="line">1.     public class FishMeThread implements Runnable &#123;  </div><div class="line"></div><div class="line">2.       </div><div class="line"></div><div class="line">3.           int count= 1, number;  </div><div class="line"></div><div class="line">4.       </div><div class="line"></div><div class="line">5.           public MyThread(int num) &#123;  </div><div class="line"></div><div class="line">6.                 number = num;  </div><div class="line"></div><div class="line">7.                 System.out.println(&quot;创建线程 &quot; + number);  </div><div class="line"></div><div class="line">8.           &#125;  </div><div class="line"></div><div class="line">9.       </div><div class="line"></div><div class="line">10.       public void run() &#123;  </div><div class="line"></div><div class="line">11.             while(true) &#123;  </div><div class="line"></div><div class="line">12.                   System.out.println(&quot;线程 &quot; + number + &quot;:计数 &quot; + count);  </div><div class="line"></div><div class="line">13.                   if(++count== 6) return;  </div><div class="line"></div><div class="line">14.             &#125;   </div><div class="line"></div><div class="line">15.       &#125;  </div><div class="line"></div><div class="line">16.   </div><div class="line"></div><div class="line">17.       public static void main(String args[]) &#123;  </div><div class="line"></div><div class="line">18.             for(int i = 0; i &lt; 5; i++) &#123;  </div><div class="line"></div><div class="line">19.                   new Thread(new MyThread(i+1)).start();  </div><div class="line"></div><div class="line">20.             &#125;   </div><div class="line"></div><div class="line">21.       &#125;  </div><div class="line"></div><div class="line">22.   </div><div class="line"></div><div class="line">23. &#125;</div></pre></td></tr></table></figure>
+<p>将我们希望线程执行的代码放到run方法中，然后通过start方法来启动线程，start方法首先为线程的执行准备好系统资源，然后再去调用run方法。当某个类继承了Thread类之后，该类就叫做一个线程类。 </p>
+<h4 id="三、Thread源码研究："><a href="#三、Thread源码研究：" class="headerlink" title="三、Thread源码研究："></a>三、Thread源码研究：</h4><p>1) Thread类也实现了Runnable接口，因此实现了Runnable接口中的run方法；<br>2) 当生成一个线程对象时，如果没有为其设定名字，那么线程对象的名字将使用如下形式：Thread-number,该number将是自动增加的，并被所有的Thread对象所共享（因为它是static的成员变量）。<br>3) 当使用第一种方式来生成线程对象时，我们需要重写run方法，因为Thread类的run方法此时什么事情也不做。<br>4）当使用第二种方式生成线程对象时，我们需要实现Runnable接口的run方法，然后使用new Thread（new MyThread（））（假如MyThread已经实现了Runnable接口）来生成线程对象，这时的线程对象的run方法或调就会MyThread类的run方法，这样我们自己编写的run方法就执行了。<br>当使用继承Thread生成线程对象时，target为空，什么也不执行，当使用第二种方式生成时，执行target.run（），target为runnable的实例对象，即为执行重写后的方法<br>总结：两种生成线程对象的区别：<br>1.两种方法均需执行线程的start方法为线程分配必须的系统资源、调度线程运行并执行线程的run方法。<br>2.在具体应用中，采用哪种方法来构造线程体要视情况而定。通常，当一个线程已继承了另一个类时，就应该用第二种方法来构造，即实现Runnable接口。 </p>
+<h4 id="三：线程的四种状态"><a href="#三：线程的四种状态" class="headerlink" title="三：线程的四种状态"></a>三：线程的四种状态</h4><ol>
+<li>新状态：线程已被创建但尚未执行（start() 尚未被调用）。</li>
+<li>可执行状态：线程可以执行，虽然不一定正在执行。CPU 时间随时可能被分配给该线程，从而使得它执行。</li>
+<li>死亡状态：正常情况下 run() 返回使得线程死亡。调用 stop()或 destroy() 亦有同样效果，但是不被推荐，前者会产生异常，后者是强制终止，不会释放锁。</li>
+<li>阻塞状态：线程不会被分配 CPU 时间，无法执行。</li>
+</ol>
+<h4 id="四：线程的优先级"><a href="#四：线程的优先级" class="headerlink" title="四：线程的优先级"></a>四：线程的优先级</h4><p>线程的优先级代表该线程的重要程度，当有多个线程同时处于可执行状态并等待获得 CPU 时间时，线程调度系统根据各个线程的优先级来决定给谁分配 CPU 时间，优先级高的线程有更大的机会获得 CPU 时间，优先级低的线程也不是没有机会，只是机会要小一些罢了。<br>你可以调用 Thread 类的方法 getPriority() 和 setPriority()来存取线程的优先级，线程的优先级界于1(MIN_PRIORITY)和10(MAX_PRIORITY)之间，缺省是5(NORM_PRIORITY)。</p>
+<h4 id="五：线程的同步"><a href="#五：线程的同步" class="headerlink" title="五：线程的同步"></a>五：线程的同步</h4><p><a href="http://www.2cto.com/kf/201408/324061.html" target="_blank" rel="external">http://www.2cto.com/kf/201408/324061.html</a><br>由于同一进程的多个线程共享同一片存储空间，在带来方便的同时，也带来了访问冲突这个严重的问题。Java语言提供了专门机制以解决这种冲突，有效避免了同一个数据对象被多个线程同时访问。<br>由于我们可以通过 private 关键字来保证数据对象只能被方法访问，所以我们只需针对方法提出一套机制，这套机制就是 synchronized 关键字，它包括两种用法：synchronized 方法和 synchronized 块。</p>
+<ol>
+<li><p>synchronized 方法：通过在方法声明中加入 synchronized关键字来声明 synchronized 方法。如：</p>
+<p>public synchronized void accessVal(int newVal);<br>synchronized 方法控制对类成员变量的访问：每个类实例对应一把锁，每个 synchronized 方法都必须获得调用该方法的类实例的锁方能执行，否则所属线程阻塞，方法一旦执行，就独占该锁，直到从该方法返回时才将锁释放，此后被阻塞的线程方能获得该锁，重新进入可执行状态。这种机制确保了同一时刻对于每一个类实例，其所有声明为 synchronized 的成员函数中至多只有一个处于可执行状态（因为至多只有一个能够获得该类实例对应的锁），从而有效避免了类成员变量的访问冲突（只要所有可能访问类成员变量的方法均被声明为 synchronized）。<br>在 Java 中，不光是类实例，每一个类也对应一把锁，这样我们也可将类的静态成员函数声明为 synchronized ，以控制其对类的静态成员变量的访问。<br>synchronized 方法的缺陷：若将一个大的方法声明为synchronized<br>将会大大影响效率，典型地，若将线程类的方法 run() 声明为 synchronized ，由于在线程的整个生命期内它一直在运行，因此将导致它对本类任何 synchronized 方法的调用都永远不会成功。当然我们可以通过将访问类成员变量的代码放到专门的方法中，将其声明为 synchronized ，并在主方法中调用来解决这一问题，但是 Java 为我们提供了更好的解决办法，那就是 synchronized 块。</p>
+</li>
+<li><p>synchronized 块：通过 synchronized关键字来声明synchronized 块。语法如下： </p>
+</li>
+</ol>
+<p>synchronized(syncObject) {<br>  //允许访问控制的代码<br>}<br>synchronized 块是这样一个代码块，其中的代码必须获得对象 syncObject （如前所述，可以是类实例或类）的锁方能执行，具体机制同前所述。由于可以针对任意代码块，且可任意指定上锁的对象，故灵活性较高。</p>
+<p>​     3.使用特殊域变量(volatile)实现线程同步</p>
+<p>   a.volatile关键字为域变量的访问提供了一种免锁机制， </p>
+<p>   b.使用volatile修饰域相当于告诉<a href="http://www.2cto.com/os/xuniji/" target="_blank" rel="external">虚拟机</a>该域可能会被其他线程更新， </p>
+<p>   c.因此每次使用该域就要重新计算，而不是使用寄存器中的值 </p>
+<p>   d.volatile不会提供任何原子操作，它也不能用来修饰final类型的变量 </p>
+<p>   注：多线程中的非同步问题主要出现在对域的读写上，如果让域自身避免这个问题，则就不需要修改操作该域的方法。 </p>
+<p>   用final域，有锁保护的域和volatile域可以避免非同步的问题。  </p>
+<p>4.使用重入锁实现线程同步</p>
+<p>   在<a href="http://www.2cto.com/kf/ware/Java/" target="_blank" rel="external">Java</a>SE5.0中新增了一个java.util.concurrent包来支持同步。 </p>
+<p>   ReentrantLock类是可重入、互斥、实现了Lock接口的锁， </p>
+<p>   它与使用synchronized方法和快具有相同的基本行为和语义，并且扩展了其能力</p>
+<p>   ReenreantLock类的常用方法有：</p>
+<p>   ReentrantLock() : 创建一个ReentrantLock实例 </p>
+<pre><code>lock() : 获得锁 
+
+unlock() : 释放锁 
+</code></pre><p>   注：ReentrantLock()还有一个可以创建公平锁的构造方法，但由于能大幅度降低程序运行效率，不推荐使用 </p>
+<p>   注：关于Lock对象和synchronized关键字的选择： </p>
+<pre><code>a.最好两个都不用，使用一种java.util.concurrent包提供的机制， 
+
+    能够帮助用户处理所有与锁相关的代码。 
+
+b.如果synchronized关键字能满足用户的需求，就用synchronized，因为它能简化代码 
+
+c.如果需要更高级的功能，就用ReentrantLock类，此时要注意及时释放锁，否则会出现死锁，通常在finally代码释放锁       
+</code></pre><p>5.使用局部变量实现线程同步 </p>
+<p>   如果使用ThreadLocal管理变量，则每一个使用该变量的线程都获得该变量的副本， </p>
+<p>   副本之间相互独立，这样每一个线程都可以随意修改自己的变量副本，而不会对其他线程产生影响。</p>
+<p> ThreadLocal 类的常用方法</p>
+<p>   ThreadLocal() : 创建一个线程本地变量 </p>
+<p>   get() : 返回此线程局部变量的当前线程副本中的值 </p>
+<p>   initialValue() : 返回此线程局部变量的当前线程的”初始值” </p>
+<p>   set(T value) : 将此线程局部变量的当前线程副本中的值设置为value</p>
+<h5 id="ThreadLocal与同步机制"><a href="#ThreadLocal与同步机制" class="headerlink" title="ThreadLocal与同步机制"></a>ThreadLocal与同步机制</h5><pre><code>a.ThreadLocal与同步机制都是为了解决多线程中相同变量的访问冲突问题。 
+
+b.前者采用以&quot;空间换时间&quot;的方法，后者采用以&quot;时间换空间&quot;的方式 
+</code></pre><h4 id="六：线程的阻塞"><a href="#六：线程的阻塞" class="headerlink" title="六：线程的阻塞"></a>六：线程的阻塞</h4><p>为了解决对共享存储区的访问冲突，Java 引入了同步机制，现在让我们来考察多个线程对共享资源的访问，显然同步机制已经不够了，因为在任意时刻所要求的资源不一定已经准备好了被访问，反过来，同一时刻准备好了的资源也可能不止一个。为了解决这种情况下的访问控制问题，Java 引入了对阻塞机制的支持。<br>阻塞指的是暂停一个线程的执行以等待某个条件发生（如某资源就绪），学过操作系统的同学对它一定已经很熟悉了。Java 提供了大量方法来支持阻塞，下面让我们逐一分析。</p>
+<ol>
+<li>sleep() 方法：sleep() 允许 指定以毫秒为单位的一段时间作为参数，它使得线程在指定的时间内进入阻塞状态，不能得到CPU 时间，指定的时间一过，线程重新进入可执行状态。典型地，sleep() 被用在等待某个资源就绪的情形：<strong>测试</strong>发现条件不满足后，让线程阻塞一段时间后重新测试，直到条件满足为止。</li>
+<li>suspend() 和 resume() 方法：两个方法配套使用，suspend()使得线程进入阻塞状态，并且不会自动恢复，必须其对应的resume() 被调用，才能使得线程重新进入可执行状态。典型地，suspend() 和 resume() 被用在等待另一个线程产生的结果的情形：测试发现结果还没有产生后，让线程阻塞，另一个线程产生了结果后，调用 resume() 使其恢复。</li>
+<li>yield() 方法：yield() 使得线程放弃当前分得的 CPU 时间，但是不使线程阻塞，即线程仍处于可执行状态，随时可能再次分得 CPU 时间。调用 yield() 的效果等价于调度程序认为该线程已执行了足够的时间从而转到另一个线程。</li>
+<li>wait() 和 notify() 方法：两个方法配套使用，wait() 使得线程进入阻塞状态，它有两种形式，一种允许 指定以毫秒为单位的一段时间作为参数，另一种没有参数，前者当对应的 notify() 被调用或者超出指定时间时线程重新进入可执行状态，后者则必须对应的 notify() 被调用。</li>
+</ol>
+<p>初看起来它们与 suspend() 和 resume() 方法对没有什么分别，但是事实上它们是截然不同的。区别的核心在于，前面叙述的所有方法，阻塞时都不会释放占用的锁（如果占用了的话），而这一对方法则相反。<br>上述的核心区别导致了一系列的细节上的区别。<br>首先，前面叙述的所有方法都隶属于 Thread 类，但是这一对却直接隶属于 Object 类，也就是说，所有对象都拥有这一对方法。初看起来这十分不可思议，但是实际上却是很自然的，因为这一对方法阻塞时要释放占用的锁，而锁是任何对象都具有的，调用任意对象的 wait() 方法导致线程阻塞，并且该对象上的锁被释放。而调用 任意对象的notify()方法则导致因调用该对象的 wait() 方法而阻塞的线程中随机选择的一个解除阻塞（但要等到获得锁后才真正可执行）。<br>其次，前面叙述的所有方法都可在任何位置调用，但是这一对方法却必须在 synchronized 方法或块中调用，理由也很简单，只有在synchronized 方法或块中当前线程才占有锁，才有锁可以释放。同样的道理，调用这一对方法的对象上的锁必须为当前线程所拥有，这样才有锁可以释放。因此，这一对方法调用必须放置在这样的 synchronized 方法或块中，该方法或块的上锁对象就是调用这一对方法的对象。若不满足这一条件，则程序虽然仍能编译，但在运行时会出现IllegalMonitorStateException 异常。<br>wait() 和 notify() 方法的上述特性决定了它们经常和synchronized 方法或块一起使用，将它们和操作系统的进程间通信机制作一个比较就会发现它们的相似性：synchronized方法或块提供了类似于操作系统原语的功能，它们的执行不会受到多线程机制的干扰，而这一对方法则相当于 block 和wakeup 原语（这一对方法均声明为 synchronized）。它们的结合使得我们可以实现操作系统上一系列精妙的进程间通信的<strong>算法</strong>（如信号量算法），并用于解决各种复杂的线程间通信问题。<br>关于 wait() 和 notify() 方法最后再说明两点：<br>第一：调用 notify() 方法导致解除阻塞的线程是从因调用该对象的 wait() 方法而阻塞的线程中随机选取的，我们无法预料哪一个线程将会被选择，所以编程时要特别小心，避免因这种不确定性而产生问题。<br>第二：除了 notify()，还有一个方法 notifyAll() 也可起到类似作用，唯一的区别在于，调用 notifyAll() 方法将把因调用该对象的 wait() 方法而阻塞的所有线程一次性全部解除阻塞。当然，只有获得锁的那一个线程才能进入可执行状态。<br>谈到阻塞，就不能不谈一谈死锁，略一分析就能发现，suspend() 方法和不指定超时期限的 wait() 方法的调用都可能产生死锁。遗憾的是，Java 并不在语言级别上支持死锁的避免，我们在编程中必须小心地避免死锁。<br>以上我们对 Java 中实现线程阻塞的各种方法作了一番分析，我们重点分析了 wait() 和 notify() 方法，因为它们的功能最强大，使用也最灵活，但是这也导致了它们的效率较低，较容易出错。实际使用中我们应该灵活使用各种方法，以便更好地达到我们的目的。</p>
+<p>生产者消费者模型</p>
+<p><a href="http://blog.csdn.net/zhangyuan19880606/article/details/51153035" target="_blank" rel="external">http://blog.csdn.net/zhangyuan19880606/article/details/51153035</a></p>
+<p>一种重要的模型，基于等待/通知机制。生产者/消费者模型描述的是有一块缓冲区作为仓库，生产者可将产品放入仓库，消费者可以从仓库中取出产品，生产者/消费者模型关注的是以下几个点：</p>
+<p>1、生产者生产的时候消费者不能消费</p>
+<p>2、消费者消费的时候生产者不能生产</p>
+<p>3、缓冲区空时消费者不能消费</p>
+<p>4、缓冲区满时生产者不能生产</p>
+<p>生产者/模型作为一种重要的模型，它的优点在于：</p>
+<p>1、解耦。因为多了一个缓冲区，所以生产者和消费者并不直接相互调用，这一点很容易想到，这样生产者和消费者的代码发生变化，都不会对对方产生影响，这样其实就把生产者和消费者之间的强耦合解开，变为了生产者和缓冲区/消费者和缓冲区之间的弱耦合</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">** </div><div class="line"> * 公共资源类 </div><div class="line"> */  </div><div class="line">public class PublicResource &#123;  </div><div class="line">    private int number = 0;  </div><div class="line">  </div><div class="line">    /** </div><div class="line">     * 增加公共资源 </div><div class="line">     */  </div><div class="line">    public synchronized void increace() &#123;  </div><div class="line">        while (number != 0) &#123;  </div><div class="line">            try &#123;  </div><div class="line">                wait();  </div><div class="line">            &#125; catch (InterruptedException e) &#123;  </div><div class="line">                e.printStackTrace();  </div><div class="line">            &#125;  </div><div class="line">        &#125;  </div><div class="line">        number++;  </div><div class="line">        System.out.println(number);  </div><div class="line">        notify();  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    /** </div><div class="line">     * 减少公共资源 </div><div class="line">     */  </div><div class="line">    public synchronized void decreace() &#123;  </div><div class="line">        while (number == 0) &#123;  </div><div class="line">            try &#123;  </div><div class="line">                wait();  </div><div class="line">            &#125; catch (InterruptedException e) &#123;  </div><div class="line">                e.printStackTrace();  </div><div class="line">            &#125;  </div><div class="line">        &#125;  </div><div class="line">        number--;  </div><div class="line">        System.out.println(number);  </div><div class="line">        notify();  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>二，分别定义生产者线程和消费者线程，并模拟多次生产和消费，即增加和减少公共资源的number值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">/** </div><div class="line"> * 生产者线程，负责生产公共资源 </div><div class="line"> */  </div><div class="line">public class ProducerThread implements Runnable &#123;  </div><div class="line">    private PublicResource resource;  </div><div class="line">  </div><div class="line">    public ProducerThread(PublicResource resource) &#123;  </div><div class="line">        this.resource = resource;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    @Override  </div><div class="line">    public void run() &#123;  </div><div class="line">        for (int i = 0; i &lt; 10; i++) &#123;  </div><div class="line">            try &#123;  </div><div class="line">                Thread.sleep((long) (Math.random() * 1000));  </div><div class="line">            &#125; catch (InterruptedException e) &#123;  </div><div class="line">                e.printStackTrace();  </div><div class="line">            &#125;  </div><div class="line">            resource.increace();  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">&#125;  </div><div class="line">/** </div><div class="line"> * 消费者线程，负责消费公共资源 </div><div class="line"> */  </div><div class="line">public class ConsumerThread implements Runnable &#123;  </div><div class="line">    private PublicResource resource;  </div><div class="line">  </div><div class="line">    public ConsumerThread(PublicResource resource) &#123;  </div><div class="line">        this.resource = resource;  </div><div class="line">    &#125;  </div><div class="line">  </div><div class="line">    @Override  </div><div class="line">    public void run() &#123;  </div><div class="line">        for (int i = 0; i &lt; 10; i++) &#123;  </div><div class="line">            try &#123;  </div><div class="line">                Thread.sleep((long) (Math.random() * 1000));  </div><div class="line">            &#125; catch (InterruptedException e) &#123;  </div><div class="line">                e.printStackTrace();  </div><div class="line">            &#125;  </div><div class="line">            resource.decreace();  </div><div class="line">        &#125;  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>三，模拟多个生产者和消费者操作公共资源的情形，结果须保证是在允许的范围内。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public class ProducerConsumerTest &#123;  </div><div class="line">    public static void main(String[] args) &#123;  </div><div class="line">        PublicResource resource = new PublicResource();  </div><div class="line">        new Thread(new ProducerThread(resource)).start();  </div><div class="line">        new Thread(new ConsumerThread(resource)).start();  </div><div class="line">        new Thread(new ProducerThread(resource)).start();  </div><div class="line">        new Thread(new ConsumerThread(resource)).start();  </div><div class="line">        new Thread(new ProducerThread(resource)).start();  </div><div class="line">        new Thread(new ConsumerThread(resource)).start();  </div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>生产数据和消费数据一定是成对出现的，生产一个消费一个，满了不生产，空了不消费，生产者不能无限生产，消费者也不能无限消费，符合生产者/消费者模型。生产者速度快，就不占用CPU时间片，等着消费者消费完通知它继续生产，这块时间片可以用来给其他线程用。</p>
+<h4 id="七：守护线程"><a href="#七：守护线程" class="headerlink" title="七：守护线程"></a>七：守护线程</h4><p>守护线程是一类特殊的线程，它和普通线程的区别在于它并不是应用程序的核心部分，当一个应用程序的所有非守护线程终止运行时，即使仍然有守护线程在运行，应用程序也将终止，反之，只要有一个非守护线程在运行，应用程序就不会终止。守护线程一般被用于在后台为其它线程提供服务。</p>
+<p>可以通过调用方法 isDaemon() 来判断一个线程是否是守护线程，也可以调用方法 setDaemon() 来将一个线程设为守护线程。</p>
+<p>死锁：<strong>产生死锁的四个必要条件：</strong></p>
+<p>（1） 互斥条件：一个资源每次只能被一个进程使用。<br>（2） 请求与保持条件：一个进程因请求资源而阻塞时，对已获得的资源保持不放。<br>（3） 不剥夺条件:进程已获得的资源，在末使用完之前，不能强行剥夺。<br>（4） 循环等待条件:若干进程之间形成一种头尾相接的循环等待资源关系。</p>
+<p>锁的类别有两种分法：  </p>
+<ol>
+<li>从数据库系统的角度来看：分为独占锁（即排它锁），共享锁和更新锁  </li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line">1.	&lt;span style=&quot;font-size:18px;&quot;&gt;class Test implements Runnable  </div><div class="line">2.	&#123;  </div><div class="line">3.	    private boolean flag; //flag标签，让t1和t2线程执行不同代码  </div><div class="line">4.	    public Test(boolean flag)  </div><div class="line">5.	    &#123;  </div><div class="line">6.	        this.flag=flag;  </div><div class="line">7.	    &#125;  </div><div class="line">8.	    public void run()  </div><div class="line">9.	    &#123;  </div><div class="line">10.	        if (flag)    </div><div class="line">11.	        &#123;  </div><div class="line">12.	            synchronized(MyLock.lock1)  </div><div class="line">13.	            &#123;  </div><div class="line">14.	                System.out.println(&quot;if1&quot;);  </div><div class="line">15.	  </div><div class="line">16.	                synchronized(MyLock.lock2)  </div><div class="line">17.	                &#123;  </div><div class="line">18.	                System.out.println(&quot;if2&quot;);  </div><div class="line">19.	                &#125;  </div><div class="line">20.	            &#125;  </div><div class="line">21.	        &#125;  </div><div class="line">22.	        else  </div><div class="line">23.	        &#123;  </div><div class="line">24.	            synchronized(MyLock.lock2)  </div><div class="line">25.	            &#123;  </div><div class="line">26.	                System.out.println(&quot;else2&quot;);  </div><div class="line">27.	  </div><div class="line">28.	                synchronized(MyLock.lock1)  </div><div class="line">29.	                &#123;  </div><div class="line">30.	                System.out.println(&quot;else1&quot;);  </div><div class="line">31.	                &#125;  </div><div class="line">32.	            &#125;  </div><div class="line">33.	        &#125;  </div><div class="line">34.	      </div><div class="line">35.	    &#125;  </div><div class="line">36.	  </div><div class="line">37.	      </div><div class="line">38.	&#125;  </div><div class="line">39.	  </div><div class="line">40.	class MyLock  //两个锁，用来制造死锁  </div><div class="line">41.	&#123;  </div><div class="line">42.	    public static Object lock1 = new Object();  </div><div class="line">43.	    public static Object lock2 = new Object();  </div><div class="line">44.	  </div><div class="line">45.	&#125;  </div><div class="line">46.	  </div><div class="line">47.	class DeadLock   </div><div class="line">48.	&#123;  </div><div class="line">49.	    public static void main(String[] args)   </div><div class="line">50.	    &#123;   </div><div class="line">51.	        Thread t1 = new Thread(new Test(true)); //t1先用锁1再用锁2  </div><div class="line">52.	        Thread t2 = new Thread(new Test(false));//t2先用锁2再用锁1  </div><div class="line">53.	          </div><div class="line">54.	        t1.start();  </div><div class="line">55.	        t2.start();  </div><div class="line">56.	          </div><div class="line">57.	    &#125;  </div><div class="line">58.	&#125;  </div><div class="line">59.	&lt;/span&gt;</div></pre></td></tr></table></figure>
 
       
 
@@ -837,10 +1044,6 @@ key - 要搜索的值
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">JDBC</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">learning</a>
               </li>
              
@@ -849,7 +1052,7 @@ key - 要搜索的值
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">throwable</a>
+                <a href="javascript:void(0)">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -857,7 +1060,15 @@ key - 要搜索的值
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">java</a>
+                <a href="javascript:void(0)">JDBC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">throwable</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">多线程</a>
               </li>
             
             <div class="clearfix"></div>
