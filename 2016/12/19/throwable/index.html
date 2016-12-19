@@ -6,33 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>jsp servlet（基础整理） | Carol</title>
+  <title>throwable | Carol</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="JSP = HTML + JAVAJSP页面的运行环境—JSP服务器，JSP容器
-TOMCAT是一个JSP页面的运行环境的程序。WEB应用服务器。
-作用是向浏览器输出。 格式： &amp;lt;%=  表达式内容 %&amp;gt;  注意：表达式的最后没有“;”
-脚本 &amp;lt;%  %&amp;gt; 在HTML页面中嵌入JAVA代码的区域。可以访问后台的JAVA类。调用业务方法。
-B/S 浏览器/服务器模型。
-C/S">
+  <meta name="description" content="转：
+[]: http://blog.csdn.net/hguisu/article/details/6155636
+Throwable： 有两个重要的子类：Exception（异常）和 Error（错误），二者都是 Java 异常处理的重要子类，各自都包含大量子类。
+ Error（错误）:是程序无法处理的错误，表示运行应用程序中较严重问题。大多数错误与代码编写者执行的操作无关，而表示代码运">
 <meta property="og:type" content="article">
-<meta property="og:title" content="jsp servlet（基础整理）">
-<meta property="og:url" content="http://yoursite.com/2016/12/18/jspservlet/index.html">
+<meta property="og:title" content="throwable">
+<meta property="og:url" content="http://yoursite.com/2016/12/19/throwable/index.html">
 <meta property="og:site_name" content="Carol">
-<meta property="og:description" content="JSP = HTML + JAVAJSP页面的运行环境—JSP服务器，JSP容器
-TOMCAT是一个JSP页面的运行环境的程序。WEB应用服务器。
-作用是向浏览器输出。 格式： &amp;lt;%=  表达式内容 %&amp;gt;  注意：表达式的最后没有“;”
-脚本 &amp;lt;%  %&amp;gt; 在HTML页面中嵌入JAVA代码的区域。可以访问后台的JAVA类。调用业务方法。
-B/S 浏览器/服务器模型。
-C/S">
-<meta property="og:updated_time" content="2016-12-19T02:08:37.420Z">
+<meta property="og:description" content="转：
+[]: http://blog.csdn.net/hguisu/article/details/6155636
+Throwable： 有两个重要的子类：Exception（异常）和 Error（错误），二者都是 Java 异常处理的重要子类，各自都包含大量子类。
+ Error（错误）:是程序无法处理的错误，表示运行应用程序中较严重问题。大多数错误与代码编写者执行的操作无关，而表示代码运">
+<meta property="og:updated_time" content="2016-12-19T06:35:26.490Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="jsp servlet（基础整理）">
-<meta name="twitter:description" content="JSP = HTML + JAVAJSP页面的运行环境—JSP服务器，JSP容器
-TOMCAT是一个JSP页面的运行环境的程序。WEB应用服务器。
-作用是向浏览器输出。 格式： &amp;lt;%=  表达式内容 %&amp;gt;  注意：表达式的最后没有“;”
-脚本 &amp;lt;%  %&amp;gt; 在HTML页面中嵌入JAVA代码的区域。可以访问后台的JAVA类。调用业务方法。
-B/S 浏览器/服务器模型。
-C/S">
+<meta name="twitter:title" content="throwable">
+<meta name="twitter:description" content="转：
+[]: http://blog.csdn.net/hguisu/article/details/6155636
+Throwable： 有两个重要的子类：Exception（异常）和 Error（错误），二者都是 Java 异常处理的重要子类，各自都包含大量子类。
+ Error（错误）:是程序无法处理的错误，表示运行应用程序中较严重问题。大多数错误与代码编写者执行的操作无关，而表示代码运">
   
     <link rel="alternative" href="/atom.xml" title="Carol" type="application/atom+xml">
   
@@ -148,50 +142,56 @@ C/S">
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-jspservlet" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-throwable" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      jsp servlet（基础整理）
+      throwable
     </h1>
   
 
-        <a href="/2016/12/18/jspservlet/" class="archive-article-date">
-  	<time datetime="2016-12-18T15:12:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-18</time>
+        <a href="/2016/12/19/throwable/" class="archive-article-date">
+  	<time datetime="2016-12-19T06:19:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-19</time>
 </a>
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h5 id="JSP-HTML-JAVA"><a href="#JSP-HTML-JAVA" class="headerlink" title="JSP = HTML + JAVA"></a>JSP = HTML + JAVA</h5><p>JSP页面的运行环境—JSP服务器，JSP容器</p>
-<p>TOMCAT是一个JSP页面的运行环境的程序。WEB应用服务器。</p>
-<p>作用是向浏览器输出。 格式： &lt;%=  表达式内容 %&gt;  注意：表达式的最后没有“;”</p>
-<p>脚本 &lt;%  %&gt; 在HTML页面中嵌入JAVA代码的区域。可以访问后台的JAVA类。调用业务方法。</p>
-<p>B/S 浏览器/服务器模型。</p>
-<p>C/S 客户端/服务器模型。</p>
-<p>Client/Server是建立在局域网的基础上的。Browser/Server是建立在广域网的基础上的.。<br>　　1．硬件环境不同：C/S 一般建立在专用的网络上，小范围里的网络环境，局域网之间再通过专门服务器提供连接和数据交换服务。B/S 建立在广域网之上的， 不必是专门的网络硬件环境。例如电话上网,，租用设备.，信息管理，有比C/S更强的适应范围，一般只要有操作系统和浏览器就行。<br>　　2．对安全要求不同：C/S 一般面向相对固定的用户群， 对信息安全的控制能力很强， 一般高度机密的信息系统采用C/S 结构适宜，可以通过B/S发布部分可公开信息。B/S 建立在广域网之上, 对安全的控制能力相对弱，面向是不可知的用户群。<br>　　3．对程序架构不同：C/S 程序可以更加注重流程,，可以对权限多层次校验,，对系统运行速度可以较少考虑。B/S 对安全以及访问速度的多重的考虑,，建立在需要更加优化的基础之上，比C/S有更高的要求。 B/S结构的程序架构是发展的趋势，从MS的.Net系列的BizTalk 2000 Exchange 2000等，全面支持网络的构件搭建的系统.。SUN 和IBM推的JavaBean 构件技术等，使 B/S更加成熟。<br>　　4．软件重用不同：C/S 程序可以不可避免的整体性考虑，构件的重用性不如在B/S要求下的构件的重用性好。B/S 对的多重结构,要求构件相对独立的功能，能够相对较好的重用。<br>　　5．系统维护不同：系统维护在是软件生存周期中，开销大。重要C/S 程序由于整体性,，必须整体考察， 处理出现的问题以及系统升级。升级难，可能是再做一个全新的系统。B/S程序由构件组成，方便构件个别的更换，实现系统的无缝升级，系统维护开销减到最小，用户从网上自己下载安装就可以实现升级。<br>　　6．处理问题不同：C/S 程序可以处理用户面固定，并且在相同区域,，安全要求高需求，与操作系统相关，应该都是相同的系统。B/S 建立在广域网上，面向不同的用户群，分散地域，这是C/S无法作到的，与操作系统平台关系最小。<br>　　7．用户接口不同：C/S 多是建立的Window平台上，表现方法有限。对程序员普遍要求较高。B/S 建立在浏览器上,，有更加丰富和生动的表现方式与用户交流，并且大部分难度减低，减低开发成本。<br>　　8．信息流不同：C/S 程序一般是典型的中央集权的机械式处理，交互性相对低。B/S 信息流向可变化， B-B、 B-C、 B-G等信息流向的变化，更象交易中心。</p>
-<p>B/S 特点集中部署—-所有内容都在服务器-基于请求/响应方式进行浏览器与服务器之间的交互—–两个H。</p>
-<p>HTTP：请求与响应的协议，规定标准。<br>HTML：响应的内容就只是HTML。因为IE只认识HTML。</p>
-<h5 id="JSP页面隐式对象"><a href="#JSP页面隐式对象" class="headerlink" title="JSP页面隐式对象"></a>JSP页面隐式对象</h5><p>详解戳</p>
-<p>[]: <a href="http://blog.csdn.net/sona_shi555/article/details/7797068" target="_blank" rel="external">http://blog.csdn.net/sona_shi555/article/details/7797068</a>    “JSP九大内置对象的作用和用法总结”</p>
-<p>对于HTTP中get和post区别</p>
-<p>详情有两篇博文</p>
-<p><a href="http://blog.csdn.net/yipiankongbai/article/details/24025633" target="_blank" rel="external">http://blog.csdn.net/yipiankongbai/article/details/24025633</a></p>
-<p>和<a href="http://www.techweb.com.cn/network/system/2016-10-11/2407736.shtml" target="_blank" rel="external">http://www.techweb.com.cn/network/system/2016-10-11/2407736.shtml</a></p>
-<h4 id="Servlet"><a href="#Servlet" class="headerlink" title="Servlet"></a>Servlet</h4><p>现在开一个Servlet要</p>
-<pre><code>1继承HttpServlet
-
-2重写doGet或doPost方法
-</code></pre><p>1、doGet()针对get请求方式。</p>
-<p>doPost()针对Post请求方式。</p>
-<p>2、Servlet接口中没有doGet()和doPost()方法的。只有一个service()方法。</p>
-<p>Service()方法是服务方法，用户发送一次请，就调用一次Service（）方法。</p>
-<p>3、 在HttpServlet中将Service方法给出的实现，转换成了调用相应的doGet和doPost方法。</p>
-<h5 id="转发重定向区别："><a href="#转发重定向区别：" class="headerlink" title="转发重定向区别："></a>转发重定向区别：</h5><p>重定向和转发有一个重要的不同：当使用转发时，JSP容器将使用一个内部的方法来调用目标页面，新的页面继续处理同一个请求，而浏览器将不会知道这个过程。 与之相反，重定向方式的含义是第一个页面通知浏览器发送一个新的页面请求。因为，当你使用重定向时，浏览器中所显示的URL会变成新页面的URL, 而当使用转发时，该URL会保持不变。重定向的速度比转发慢，因为浏览器还得发出一个新的请求。同时，由于重定向方式产生了一个新的请求，所以经过一次重定向后，request内的对象将无法使用。</p>
-<p>​          怎么选择是重定向还是转发呢？通常情况下转发更快，而且能保持request内的对象，所以他是第一选择。但是由于在转发之后，浏览器中URL仍然指向开始页面，此时如果重载当前页面，开始页面将会被重新调用。如果你不想看到这样的情况，则选择转发。 </p>
+        <p><img src="" alt="![throwable](\images\throwable.jpg)"></p>
+<p>  转：</p>
+<p>[]: <a href="http://blog.csdn.net/hguisu/article/details/6155636" target="_blank" rel="external">http://blog.csdn.net/hguisu/article/details/6155636</a></p>
+<p>Throwable： 有两个重要的子类：Exception（异常）和 Error（错误），二者都是 Java 异常处理的重要子类，各自都包含大量子类。</p>
+<p> Error（错误）:是程序无法处理的错误，表示运行应用程序中较严重问题。大多数错误与代码编写者执行的操作无关，而表示代码运行时 JVM（Java 虚拟机）出现的问题。例如，Java虚拟机运行错误（Virtual MachineError），当 JVM 不再有继续执行操作所需的内存资源时，将出现 OutOfMemoryError。这些异常发生时，Java虚拟机（JVM）一般会选择线程终止。</p>
+<p>。这些错误表示故障发生于虚拟机自身、或者发生在虚拟机试图执行应用时，如Java虚拟机运行错误（Virtual MachineError）、类定义错误（NoClassDefFoundError）等。这些错误是不可查的，因为它们在应用程序的控制和处理能力之 外，而且绝大多数是程序运行时不允许出现的状况。对于设计合理的应用程序来说，即使确实发生了错误，本质上也不应该试图去处理它所引起的异常状况。在 Java中，错误通过Error的子类描述。</p>
+<p> Exception（异常）:是程序本身可以处理的异常。</p>
+<p> Exception 类有一个重要的子类 RuntimeException。RuntimeException 类及其子类表示“JVM 常用操作”引发的错误。例如，若试图使用空值对象引用、除数为零或数组越界，则分别引发运行时异常（NullPointerException、ArithmeticException）和 ArrayIndexOutOfBoundException。</p>
+<p> Exception 类有一个重要的子类 RuntimeException。RuntimeException 类及其子类表示“JVM 常用操作”引发的错误。例如，若试图使用空值对象引用、除数为零或数组越界，则分别引发运行时异常（NullPointerException、ArithmeticException）和 ArrayIndexOutOfBoundException。</p>
+<p>  在 Java 应用程序中，异常处理机制为：抛出异常，捕捉异常。</p>
+<p> 抛出异常：当一个方法出现错误引发异常时，方法创建异常对象并交付运行时系统，异常对象中包含了异常类型和异常出现时的程序状态等异常信息。运行时系统负责寻找处置异常的代码并执行。</p>
+<p> 捕获异常：在方法抛出异常之后，运行时系统将转为寻找合适的异常处理器（exception handler）。潜在的异常处理器是异常发生时依次存留在调用栈中的方法的集合。当异常处理器所能处理的异常类型与方法抛出的异常类型相符时，即为合适 的异常处理器。运行时系统从发生异常的方法开始，依次回查调用栈中的方法，直至找到含有合适异常处理器的方法并执行。当运行时系统遍历调用栈而未找到合适 的异常处理器，则运行时系统终止。同时，意味着Java程序的终止。</p>
+<p> 对于运行时异常、错误或可查异常，Java技术所要求的异常处理方式有所不同。</p>
+<p>​    由于运行时异常的不可查性，为了更合理、更容易地实现应用程序，Java规定，运行时异常将由Java运行时系统自动抛出，允许应用程序忽略运行时异常。</p>
+<p>  对于方法运行中可能出现的Error，当运行方法不欲捕捉时，Java允许该方法不做任何抛出声明。因为，大多数Error异常属于永远不能被允许发生的状况，也属于合理的应用程序不该捕捉的异常。</p>
+<p>  对于所有的可查异常，Java规定：一个方法必须捕捉，或者声明抛出方法之外。也就是说，当一个方法选择不捕捉可查异常时，它必须声明将抛出异常。</p>
+<p>   能够捕捉异常的方法，需要提供相符类型的异常处理器。所捕捉的异常，可能是由于自身语句所引发并抛出的异常，也可能是由某个调用的方法或者Java运行时 系统等抛出的异常。也就是说，一个方法所能捕捉的异常，一定是Java代码在某处所抛出的异常。简单地说，异常总是先被抛出，后被捕捉的。</p>
+<p>​    任何Java代码都可以抛出异常，如：自己编写的代码、来自Java开发环境包中代码，或者Java运行时系统。无论是谁，都可以通过Java的throw语句抛出异常。</p>
+<p> 从方法中抛出的任何异常都必须使用throws子句。</p>
+<p> 捕捉异常通过try-catch语句或者try-catch-finally语句实现。</p>
+<p>  总体来说，Java规定：对于可查异常必须捕捉、或者声明抛出。允许忽略不可查的RuntimeException和Error。</p>
+<h5 id="Java常见异常"><a href="#Java常见异常" class="headerlink" title="Java常见异常"></a>Java常见异常</h5><p>在Java中提供了一些异常用来描述经常发生的错误，对于这些异常，有的需要程序员进行捕获处理或声明抛出，有的是由Java虚拟机自动进行捕获处理。Java中常见的异常类:</p>
+<ol>
+<li>runtimeException子类:<br> 1、 java.lang.ArrayIndexOutOfBoundsException<br> 数组索引越界异常。当对数组的索引值为负数或大于等于数组大小时抛出。<br> 2、java.lang.ArithmeticException<br> 算术条件异常。譬如：整数除零等。<br> 3、java.lang.NullPointerException<br> 空指针异常。当应用试图在要求使用对象的地方使用了null时，抛出该异常。譬如：调用null对象的实例方法、访问null对象的属性、计算null对象的长度、使用throw语句抛出null等等<br> 4、java.lang.ClassNotFoundException<br> 找不到类异常。当应用试图根据字符串形式的类名构造类，而在遍历CLASSPAH之后找不到对应名称的class文件时，抛出该异常。<br>5、java.lang.NegativeArraySizeException  数组长度为负异常<br>6、java.lang.ArrayStoreException 数组中包含不兼容的值抛出的异常<br>7、java.lang.SecurityException 安全性异常<br>8、java.lang.IllegalArgumentException 非法参数异常<br>2.IOException<br>IOException：操作输入流和输出流时可能出现的异常。<br>EOFException   文件已结束异常<br>FileNotFoundException   文件未找到异常</li>
+<li>其他<br>ClassCastException    类型转换异常类<br>ArrayStoreException  数组中包含不兼容的值抛出的异常<br>SQLException   操作数据库异常类<br>NoSuchFieldException   字段未找到异常<br>NoSuchMethodException   方法未找到抛出的异常<br>NumberFormatException    字符串转换为数字抛出的异常<br>StringIndexOutOfBoundsException 字符串索引超出范围抛出的异常<br>IllegalAccessException  不允许访问某类异常<br>InstantiationException  当应用程序试图使用Class类中的newInstance()方法创建一个类的实例，而指定的类对象无法被实例化时，抛出该异常</li>
+</ol>
+<p>抛出异常有三种形式，一是throw,一个throws，还有一种系统自动抛异常。下面它们之间的异同。</p>
+<p>当程序语句出现一些逻辑错误、主义错误或类型转换错误时，系统会自动抛出异常。</p>
+<p>throw是语句抛出一个异常。</p>
+<p>throws是方法可能抛出异常的声明。</p>
+<p><strong>throw与throws的比较</strong></p>
+<p>1、throws出现在方法函数头；而throw出现在函数体。<br>2、throws表示出现异常的一种可能性，并不一定会发生这些异常；throw则是抛出了异常，执行throw则一定抛出了某种异常对象。<br>3、两者都是消极处理异常的方式（这里的消极并不是说这种方式不好），只是抛出或者可能抛出异常，但是不会由函数去处理异常，真正的处理异常由函数的上层调用处理。</p>
 
       
 
@@ -223,7 +223,7 @@ C/S">
       
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jsp-servlet/">jsp servlet</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/throwable/">throwable</a></li></ul>
 	</div>
 
       
@@ -276,7 +276,7 @@ C/S">
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2016/12/18/jspservlet/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2016/12/19/throwable/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -290,18 +290,9 @@ C/S">
   
 <nav id="article-nav">
   
-    <a href="/2016/12/19/throwable/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          throwable
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/12/14/threadlocal/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">threadlocal</div>
+    <a href="/2016/12/18/jspservlet/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">jsp servlet（基础整理）</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -314,7 +305,7 @@ C/S">
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="jspservlet" data-title="jsp servlet（基础整理）" data-url="http://yoursite.com/2016/12/18/jspservlet/"></div>
+	<div class="ds-thread" data-thread-key="throwable" data-title="throwable" data-url="http://yoursite.com/2016/12/19/throwable/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
