@@ -6,21 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>java Throwable（基础整理） | Carol</title>
+  <title>Carol</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Throwable  Thorwable类所有异常和错误的超类，有两个子类Error和Exception，分别表示错误和异常。    其中异常类Exception又分为运行时异常(RuntimeException)和非运行时异常，    这两种异常有很大的区别，也称之为不检查异常（Unchecked Exception）和检查异常（Checked Exception）。
-Error与Excepti">
-<meta property="og:type" content="article">
-<meta property="og:title" content="java Throwable（基础整理）">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="Carol">
 <meta property="og:url" content="http://yoursite.com/2016/12/11/java-Throwable/index.html">
 <meta property="og:site_name" content="Carol">
-<meta property="og:description" content="Throwable  Thorwable类所有异常和错误的超类，有两个子类Error和Exception，分别表示错误和异常。    其中异常类Exception又分为运行时异常(RuntimeException)和非运行时异常，    这两种异常有很大的区别，也称之为不检查异常（Unchecked Exception）和检查异常（Checked Exception）。
-Error与Excepti">
-<meta property="og:updated_time" content="2016-12-11T06:54:53.406Z">
+<meta property="og:updated_time" content="2016-12-18T15:03:35.245Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java Throwable（基础整理）">
-<meta name="twitter:description" content="Throwable  Thorwable类所有异常和错误的超类，有两个子类Error和Exception，分别表示错误和异常。    其中异常类Exception又分为运行时异常(RuntimeException)和非运行时异常，    这两种异常有很大的区别，也称之为不检查异常（Unchecked Exception）和检查异常（Checked Exception）。
-Error与Excepti">
+<meta name="twitter:title" content="Carol">
   
     <link rel="alternative" href="/atom.xml" title="Carol" type="application/atom+xml">
   
@@ -139,30 +133,9 @@ Error与Excepti">
             <article id="post-java-Throwable" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      java Throwable（基础整理）
-    </h1>
-  
-
-        <a href="/2016/12/11/java-Throwable/" class="archive-article-date">
-  	<time datetime="2016-12-11T06:46:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-11</time>
-</a>
-      </header>
-    
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="Throwable"><a href="#Throwable" class="headerlink" title="Throwable"></a>Throwable</h3><p>  Thorwable类所有异常和错误的超类，有两个子类Error和Exception，分别表示错误和异常。<br>    其中异常类Exception又分为运行时异常(RuntimeException)和非运行时异常，<br>    这两种异常有很大的区别，也称之为不检查异常（Unchecked Exception）和检查异常（Checked Exception）。</p>
-<h5 id="Error与Exception"><a href="#Error与Exception" class="headerlink" title="Error与Exception"></a>Error与Exception</h5><pre><code>Error是程序无法处理的错误，比如OutOfMemoryError、ThreadDeath等。这些异常发生时，  Java虚拟机（JVM）一般会选择线程终止。Exception是程序本身可以处理的异常，这种异常分两大类运行时异常和非运行时异常 运行时异常都是RuntimeException类及其子类异常，如NullPointerException、IndexOutOfBoundsException等，  
-
-非运行时异常是RuntimeException以外的异常，类型上都属于Exception类及其子类。从程序语法角度讲是必须进行处理的异常，如果不处理，程序就不能编译通过。 
-如IOException、SQLException等以及用户自定义的Exception异常，一般情况下不自定义检查异常。 
-</code></pre><h5 id="throw、throws关键字"><a href="#throw、throws关键字" class="headerlink" title="throw、throws关键字"></a>throw、throws关键字</h5><pre><code>throw关键字是用于方法体内部，用来抛出一个Throwable类型的异常。如果抛出了检查异常， 如果所有方法都层层上抛获取的异常，最终JVM会进行处理，处理也很简单，就是打印异常消息和堆栈信息  如果抛出的是Error或RuntimeException，则该方法的调用者可选择处理该异常。
-
-throws关键字用于方法体外部的方法声明部分，用来声明方法可能会抛出某些异常。仅当抛出了检查异常，当方法的调用者无力处理该异常的时候，应该继续抛出
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public static void test() throws Exception&#123;   </div><div class="line">  //抛出一个检查异常   </div><div class="line">        throw new Exception(&quot;方法test中的Exception&quot;);   </div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+        
       
 
       
@@ -191,11 +164,6 @@ throws关键字用于方法体外部的方法声明部分，用来声明方法�
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/throwable/">throwable</a></li></ul>
-	</div>
-
       
 
       
@@ -284,7 +252,7 @@ throws关键字用于方法体外部的方法声明部分，用来声明方法�
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="java-Throwable" data-title="java Throwable（基础整理）" data-url="http://yoursite.com/2016/12/11/java-Throwable/"></div>
+	<div class="ds-thread" data-thread-key="java-Throwable" data-title="" data-url="http://yoursite.com/2016/12/11/java-Throwable/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -368,15 +336,15 @@ throws关键字用于方法体外部的方法声明部分，用来声明方法�
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">java</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">throwable</a>
+                <a href="javascript:void(0)">jsp servlet</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">JDBC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">java</a>
               </li>
              
               <li class="article-tag-list-item">

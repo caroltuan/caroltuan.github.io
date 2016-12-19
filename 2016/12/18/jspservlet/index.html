@@ -6,38 +6,33 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>java基础整理 | Carol</title>
+  <title>jsp servlet（基础整理） | Carol</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="垃圾回收JAVA程序运行过程中，有一个线程叫垃圾回收线程。程序运行了一时间之后很多垃圾信息。回收。
-自动调用。程序员不能控制。1 内存不够。2 CPU空闲。
-
-垃圾：没有被引用的内存空间。
-java运行机制Java先编译后解释型语言。
-源文件(.java)----编译-&amp;gt;类文件(.class)（字节码文件）---解释执行（JVM：java虚拟机）---&amp;gt;机器指令
-JDK(Java De">
+  <meta name="description" content="JSP = HTML + JAVAJSP页面的运行环境—JSP服务器，JSP容器
+TOMCAT是一个JSP页面的运行环境的程序。WEB应用服务器。
+作用是向浏览器输出。 格式： &amp;lt;%=  表达式内容 %&amp;gt;  注意：表达式的最后没有“;”
+脚本 &amp;lt;%  %&amp;gt; 在HTML页面中嵌入JAVA代码的区域。可以访问后台的JAVA类。调用业务方法。
+B/S 浏览器/服务器模型。
+C/S">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java基础整理">
-<meta property="og:url" content="http://yoursite.com/2016/12/11/java1/index.html">
+<meta property="og:title" content="jsp servlet（基础整理）">
+<meta property="og:url" content="http://yoursite.com/2016/12/18/jspservlet/index.html">
 <meta property="og:site_name" content="Carol">
-<meta property="og:description" content="垃圾回收JAVA程序运行过程中，有一个线程叫垃圾回收线程。程序运行了一时间之后很多垃圾信息。回收。
-自动调用。程序员不能控制。1 内存不够。2 CPU空闲。
-
-垃圾：没有被引用的内存空间。
-java运行机制Java先编译后解释型语言。
-源文件(.java)----编译-&amp;gt;类文件(.class)（字节码文件）---解释执行（JVM：java虚拟机）---&amp;gt;机器指令
-JDK(Java De">
-<meta property="og:image" content="http://yoursite.com/\images\javamodel.png">
-<meta property="og:updated_time" content="2016-12-11T01:57:04.854Z">
+<meta property="og:description" content="JSP = HTML + JAVAJSP页面的运行环境—JSP服务器，JSP容器
+TOMCAT是一个JSP页面的运行环境的程序。WEB应用服务器。
+作用是向浏览器输出。 格式： &amp;lt;%=  表达式内容 %&amp;gt;  注意：表达式的最后没有“;”
+脚本 &amp;lt;%  %&amp;gt; 在HTML页面中嵌入JAVA代码的区域。可以访问后台的JAVA类。调用业务方法。
+B/S 浏览器/服务器模型。
+C/S">
+<meta property="og:updated_time" content="2016-12-19T02:08:37.420Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java基础整理">
-<meta name="twitter:description" content="垃圾回收JAVA程序运行过程中，有一个线程叫垃圾回收线程。程序运行了一时间之后很多垃圾信息。回收。
-自动调用。程序员不能控制。1 内存不够。2 CPU空闲。
-
-垃圾：没有被引用的内存空间。
-java运行机制Java先编译后解释型语言。
-源文件(.java)----编译-&amp;gt;类文件(.class)（字节码文件）---解释执行（JVM：java虚拟机）---&amp;gt;机器指令
-JDK(Java De">
-<meta name="twitter:image" content="http://yoursite.com/\images\javamodel.png">
+<meta name="twitter:title" content="jsp servlet（基础整理）">
+<meta name="twitter:description" content="JSP = HTML + JAVAJSP页面的运行环境—JSP服务器，JSP容器
+TOMCAT是一个JSP页面的运行环境的程序。WEB应用服务器。
+作用是向浏览器输出。 格式： &amp;lt;%=  表达式内容 %&amp;gt;  注意：表达式的最后没有“;”
+脚本 &amp;lt;%  %&amp;gt; 在HTML页面中嵌入JAVA代码的区域。可以访问后台的JAVA类。调用业务方法。
+B/S 浏览器/服务器模型。
+C/S">
   
     <link rel="alternative" href="/atom.xml" title="Carol" type="application/atom+xml">
   
@@ -153,71 +148,50 @@ JDK(Java De">
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-java1" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-jspservlet" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      java基础整理
+      jsp servlet（基础整理）
     </h1>
   
 
-        <a href="/2016/12/11/java1/" class="archive-article-date">
-  	<time datetime="2016-12-11T01:31:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-11</time>
+        <a href="/2016/12/18/jspservlet/" class="archive-article-date">
+  	<time datetime="2016-12-18T15:12:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-18</time>
 </a>
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h5 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h5><p>JAVA程序运行过程中，有一个线程叫垃圾回收线程。程序运行了一时间之后很多垃圾信息。回收。</p>
-<pre><code>自动调用。程序员不能控制。1 内存不够。2 CPU空闲。
+        <h5 id="JSP-HTML-JAVA"><a href="#JSP-HTML-JAVA" class="headerlink" title="JSP = HTML + JAVA"></a>JSP = HTML + JAVA</h5><p>JSP页面的运行环境—JSP服务器，JSP容器</p>
+<p>TOMCAT是一个JSP页面的运行环境的程序。WEB应用服务器。</p>
+<p>作用是向浏览器输出。 格式： &lt;%=  表达式内容 %&gt;  注意：表达式的最后没有“;”</p>
+<p>脚本 &lt;%  %&gt; 在HTML页面中嵌入JAVA代码的区域。可以访问后台的JAVA类。调用业务方法。</p>
+<p>B/S 浏览器/服务器模型。</p>
+<p>C/S 客户端/服务器模型。</p>
+<p>Client/Server是建立在局域网的基础上的。Browser/Server是建立在广域网的基础上的.。<br>　　1．硬件环境不同：C/S 一般建立在专用的网络上，小范围里的网络环境，局域网之间再通过专门服务器提供连接和数据交换服务。B/S 建立在广域网之上的， 不必是专门的网络硬件环境。例如电话上网,，租用设备.，信息管理，有比C/S更强的适应范围，一般只要有操作系统和浏览器就行。<br>　　2．对安全要求不同：C/S 一般面向相对固定的用户群， 对信息安全的控制能力很强， 一般高度机密的信息系统采用C/S 结构适宜，可以通过B/S发布部分可公开信息。B/S 建立在广域网之上, 对安全的控制能力相对弱，面向是不可知的用户群。<br>　　3．对程序架构不同：C/S 程序可以更加注重流程,，可以对权限多层次校验,，对系统运行速度可以较少考虑。B/S 对安全以及访问速度的多重的考虑,，建立在需要更加优化的基础之上，比C/S有更高的要求。 B/S结构的程序架构是发展的趋势，从MS的.Net系列的BizTalk 2000 Exchange 2000等，全面支持网络的构件搭建的系统.。SUN 和IBM推的JavaBean 构件技术等，使 B/S更加成熟。<br>　　4．软件重用不同：C/S 程序可以不可避免的整体性考虑，构件的重用性不如在B/S要求下的构件的重用性好。B/S 对的多重结构,要求构件相对独立的功能，能够相对较好的重用。<br>　　5．系统维护不同：系统维护在是软件生存周期中，开销大。重要C/S 程序由于整体性,，必须整体考察， 处理出现的问题以及系统升级。升级难，可能是再做一个全新的系统。B/S程序由构件组成，方便构件个别的更换，实现系统的无缝升级，系统维护开销减到最小，用户从网上自己下载安装就可以实现升级。<br>　　6．处理问题不同：C/S 程序可以处理用户面固定，并且在相同区域,，安全要求高需求，与操作系统相关，应该都是相同的系统。B/S 建立在广域网上，面向不同的用户群，分散地域，这是C/S无法作到的，与操作系统平台关系最小。<br>　　7．用户接口不同：C/S 多是建立的Window平台上，表现方法有限。对程序员普遍要求较高。B/S 建立在浏览器上,，有更加丰富和生动的表现方式与用户交流，并且大部分难度减低，减低开发成本。<br>　　8．信息流不同：C/S 程序一般是典型的中央集权的机械式处理，交互性相对低。B/S 信息流向可变化， B-B、 B-C、 B-G等信息流向的变化，更象交易中心。</p>
+<p>B/S 特点集中部署—-所有内容都在服务器-基于请求/响应方式进行浏览器与服务器之间的交互—–两个H。</p>
+<p>HTTP：请求与响应的协议，规定标准。<br>HTML：响应的内容就只是HTML。因为IE只认识HTML。</p>
+<h5 id="JSP页面隐式对象"><a href="#JSP页面隐式对象" class="headerlink" title="JSP页面隐式对象"></a>JSP页面隐式对象</h5><p>详解戳</p>
+<p>[]: <a href="http://blog.csdn.net/sona_shi555/article/details/7797068" target="_blank" rel="external">http://blog.csdn.net/sona_shi555/article/details/7797068</a>    “JSP九大内置对象的作用和用法总结”</p>
+<p>对于HTTP中get和post区别</p>
+<p>详情有两篇博文</p>
+<p><a href="http://blog.csdn.net/yipiankongbai/article/details/24025633" target="_blank" rel="external">http://blog.csdn.net/yipiankongbai/article/details/24025633</a></p>
+<p>和<a href="http://www.techweb.com.cn/network/system/2016-10-11/2407736.shtml" target="_blank" rel="external">http://www.techweb.com.cn/network/system/2016-10-11/2407736.shtml</a></p>
+<h4 id="Servlet"><a href="#Servlet" class="headerlink" title="Servlet"></a>Servlet</h4><p>现在开一个Servlet要</p>
+<pre><code>1继承HttpServlet
 
-垃圾：没有被引用的内存空间。
-</code></pre><h5 id="java运行机制"><a href="#java运行机制" class="headerlink" title="java运行机制"></a>java运行机制</h5><p>Java先编译后解释型语言。</p>
-<pre><code>源文件(.java)----编译-&gt;类文件(.class)（字节码文件）---解释执行（JVM：java虚拟机）---&gt;机器指令
-</code></pre><p>JDK(Java Development Kit) Java开发工具包 </p>
-<p>   JDK = JRE + 工具（编译器、调试器、其他工具……） + 类库 </p>
-<p>JRE (Java Runtime Environment)  Java运行时环境 </p>
-<p>  JRE = JVM(Java Virtual Machine) Java虚拟机+解释器 </p>
-<p><img src="\images\javamodel.png" alt="javamodel"></p>
-<p>原始数据类型就只有8个：byte,short,int,long  </p>
-<p>float,double  char   boolean</p>
-<h5 id="String字符串数据类型"><a href="#String字符串数据类型" class="headerlink" title="String字符串数据类型"></a>String字符串数据类型</h5><p>String实际上它是一个类,</p>
-<p>字符串不变性：表示字符串字面量是不会改变的。</p>
-<p>字符串常量池。用来存放字符串常量</p>
-<h5 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h5><p>数组就是保存同一类型的一大堆的变量。</p>
-<p>声明一个数组。   int[] a; 推荐使用。</p>
-<p>数组的异常- ArrayIndexOutOfBoundsException（索引超出范围）</p>
-<p><strong>数组是引用数据类型</strong></p>
-<p>当一个数组给另一个数组，使用数组名称赋值时，实际上是将数组的引用交给另一个数组。</p>
-<p>两个数组使用的是同一块内存，两个数组引用是相同的。</p>
-<p>所以一个数组对数组元素的修改等于两个数组一起改变。</p>
-<h6 id="java-util-Arrays类。封装了针对数组的操作方法。"><a href="#java-util-Arrays类。封装了针对数组的操作方法。" class="headerlink" title="java.util.Arrays类。封装了针对数组的操作方法。"></a>java.util.Arrays类。封装了针对数组的操作方法。</h6><p> sort。排序方法。sort(byte[] a)对指定的 byte 型数组按数字升序进行排序。</p>
-<p>binarySearch(int[]a,int key)</p>
-<pre><code>使用二分搜索法来搜索指定的 int 型数组，以获得指定的值。必须在进行此调用之前对数组进行排序。如果没有对数组进行排序，则结果是不确定的。如果数组包含多个带有指定值的元素，则无法保证找到的是哪一个。 
-</code></pre><p>参数： </p>
-<pre><code>a - 要搜索的数组 
-
-key - 要搜索的值 
-</code></pre><p>返回： </p>
-<pre><code>如果它包含在数组中，则返回搜索键的索引；否则返回 (-(*插入点*) - 1)。*插入点* 被定义为将键插入数组的那一点：即第一个大于此键的元素索引，如果数组中的所有元素都小于指定的键，则为 a.length。注意，这保证了当且仅当此键被找到时，返回的值将 &gt;= 0。
-</code></pre><p>copyOf使用老数组创建一个新的数组。同时拷贝数据。</p>
-<h5 id="二维数组和多维数组"><a href="#二维数组和多维数组" class="headerlink" title="二维数组和多维数组"></a>二维数组和多维数组</h5><p>二维数组是否可以排序？不能，会报ClassCastException异常。</p>
-<h5 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h5><p>为什么要创建函数？</p>
-<pre><code>一个函数代表了一个功能。功能最好单一，独立，不可拆分。
-
-可以重复使用
-
-调用方便
-
-结构清晰，层次更明确，修改容易。
-
-可以利用函数将多层的循环变成多个一层的循环。
-
-为了给我们的程序分模块。
-</code></pre><p>“</p>
+2重写doGet或doPost方法
+</code></pre><p>1、doGet()针对get请求方式。</p>
+<p>doPost()针对Post请求方式。</p>
+<p>2、Servlet接口中没有doGet()和doPost()方法的。只有一个service()方法。</p>
+<p>Service()方法是服务方法，用户发送一次请，就调用一次Service（）方法。</p>
+<p>3、 在HttpServlet中将Service方法给出的实现，转换成了调用相应的doGet和doPost方法。</p>
+<h5 id="转发重定向区别："><a href="#转发重定向区别：" class="headerlink" title="转发重定向区别："></a>转发重定向区别：</h5><p>重定向和转发有一个重要的不同：当使用转发时，JSP容器将使用一个内部的方法来调用目标页面，新的页面继续处理同一个请求，而浏览器将不会知道这个过程。 与之相反，重定向方式的含义是第一个页面通知浏览器发送一个新的页面请求。因为，当你使用重定向时，浏览器中所显示的URL会变成新页面的URL, 而当使用转发时，该URL会保持不变。重定向的速度比转发慢，因为浏览器还得发出一个新的请求。同时，由于重定向方式产生了一个新的请求，所以经过一次重定向后，request内的对象将无法使用。</p>
+<p>​          怎么选择是重定向还是转发呢？通常情况下转发更快，而且能保持request内的对象，所以他是第一选择。但是由于在转发之后，浏览器中URL仍然指向开始页面，此时如果重载当前页面，开始页面将会被重新调用。如果你不想看到这样的情况，则选择转发。 </p>
 
       
 
@@ -249,7 +223,7 @@ key - 要搜索的值
       
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jsp-servlet/">jsp servlet</a></li></ul>
 	</div>
 
       
@@ -302,7 +276,7 @@ key - 要搜索的值
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2016/12/11/java1/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2016/12/18/jspservlet/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -316,18 +290,9 @@ key - 要搜索的值
   
 <nav id="article-nav">
   
-    <a href="/2016/12/11/java-oop/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          java oop（基础整理）
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/12/10/multithreading/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">multithreading</div>
+    <a href="/2016/12/14/threadlocal/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">threadlocal</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -340,7 +305,7 @@ key - 要搜索的值
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="java1" data-title="java基础整理" data-url="http://yoursite.com/2016/12/11/java1/"></div>
+	<div class="ds-thread" data-thread-key="jspservlet" data-title="jsp servlet（基础整理）" data-url="http://yoursite.com/2016/12/18/jspservlet/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
