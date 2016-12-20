@@ -131,6 +131,136 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-ajax" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/20/ajax/">ajax</a>
+    </h1>
+  
+
+        <a href="/2016/12/20/ajax/" class="archive-article-date">
+  	<time datetime="2016-12-20T02:10:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-20</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Ajax是一个异步刷新的技术。可以现实在页面上的局部刷新。</p>
+<p>Ajax技术实现只使用一个xhr对象。</p>
+<h5 id="XHR对象的属性，方法和事件"><a href="#XHR对象的属性，方法和事件" class="headerlink" title="XHR对象的属性，方法和事件"></a>XHR对象的属性，方法和事件</h5><h6 id="用open方法创建一个请求"><a href="#用open方法创建一个请求" class="headerlink" title="用open方法创建一个请求"></a>用open方法创建一个请求</h6><p>​    open(method, url, asynchronous)<br>​    method: 请求类型。可以是get或post</p>
+<p>​    url: 请求地址。可以使用绝对、相对地址，地址可以附带查询字符串</p>
+<p>​    asynchronous: 可选参数，请求同步还是异步。默认为true（异步）</p>
+<h6 id="用send方法发送一个请求"><a href="#用send方法发送一个请求" class="headerlink" title="用send方法发送一个请求"></a>用send方法发送一个请求</h6><p>​    send(parameter)<br>     发送无参数请求:send(null)</p>
+<h6 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h6><p>onreadystatechange   每个状态改变时都会触发这个事件处理器，通常会调用一个 JavaScript</p>
+<p>readyState    请求的状态，有5个可取值： 0=未初始化, 1=正在加载, 2=已加载, 3=交互中, 4=完成 </p>
+<p>responseText   响应内容正文的纯文本形式 </p>
+<p>responseXML  使用XML表示服务器的响应，这个对象可以解析为一个 DOM 对象 </p>
+<p>status  服务器的 HTTP 状态码（200对应OK，404对应Not Found）</p>
+<p>使用ajax实现一个请求</p>
+<p>servlet</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"><span class="keyword">import</span> java.io.PrintWriter;</div><div class="line"><span class="keyword">import</span> java.util.ArrayList;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.servlet.ServletException;</div><div class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</div><div class="line"></div><div class="line"><span class="keyword">import</span> net.sf.json.JSONArray;</div><div class="line"><span class="keyword">import</span> net.sf.json.JsonConfig;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.domain.Goods;</div><div class="line"><span class="keyword">import</span> com.domain.Types;</div><div class="line"></div><div class="line"><span class="meta">@WebServlet</span>(name = <span class="string">"GoodsServlet"</span>, urlPatterns = &#123; <span class="string">"/find.do"</span> &#125;)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GoodsServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span></div><div class="line">			<span class="keyword">throws</span> ServletException, IOException &#123;</div><div class="line"></div><div class="line">		<span class="comment">// 获得商品的集合</span></div><div class="line">		List&lt;Goods&gt; goodsList = <span class="keyword">new</span> ArrayList&lt;Goods&gt;();</div><div class="line">		Types types = <span class="keyword">new</span> Types(<span class="number">1</span>, <span class="string">"手机"</span>);</div><div class="line">		goodsList.add(<span class="keyword">new</span> Goods(<span class="number">1</span>, <span class="string">"小米1"</span>, types));</div><div class="line">		goodsList.add(<span class="keyword">new</span> Goods(<span class="number">2</span>, <span class="string">"小米2"</span>, types));</div><div class="line">		goodsList.add(<span class="keyword">new</span> Goods(<span class="number">3</span>, <span class="string">"小米3"</span>, types));</div><div class="line">		goodsList.add(<span class="keyword">new</span> Goods(<span class="number">4</span>, <span class="string">"小米4"</span>, types));</div><div class="line">		goodsList.add(<span class="keyword">new</span> Goods(<span class="number">5</span>, <span class="string">"小米5"</span>, types));</div><div class="line">		</div><div class="line">		<span class="comment">//把集合转成json数组,将json数组转成json文本</span></div><div class="line">		JsonConfig jsonConfig = <span class="keyword">new</span> JsonConfig();</div><div class="line">		jsonConfig.setExcludes(<span class="keyword">new</span> String[]&#123;<span class="string">"goodsSet"</span>&#125;);</div><div class="line">		JSONArray jsonArray = JSONArray.fromObject(goodsList,jsonConfig);</div><div class="line"></div><div class="line">		response.setContentType(<span class="string">"text/html"</span>);</div><div class="line">		response.setCharacterEncoding(<span class="string">"utf-8"</span>);</div><div class="line">		PrintWriter out = response.getWriter();</div><div class="line"></div><div class="line">		out.print(jsonArray.toString());</div><div class="line">		</div><div class="line">		out.flush();</div><div class="line">		out.close();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>jsp</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">&lt;meta http-equiv="expires" content="0"&gt;</div><div class="line">&lt;meta http-equiv="keywords" content="keyword1,keyword2,keyword3"&gt;</div><div class="line">&lt;meta http-equiv="description" content="This is my page"&gt;</div><div class="line">&lt;!--</div><div class="line">	&lt;link rel="stylesheet" type="text/css" href="styles.css"&gt;</div><div class="line">	--&gt;</div><div class="line"></div><div class="line">&lt;script type="text/javascript" src="/ajaxjson/js/jquery-1.11.1.min.js"&gt;&lt;/script&gt;</div><div class="line">&lt;script type="text/javascript"&gt;</div><div class="line">$(document).ready(function()&#123;</div><div class="line">	$("#btnquery").click(function()&#123;</div><div class="line">		$.ajax(&#123;</div><div class="line">			type: 'get',</div><div class="line">			dataType: 'json',</div><div class="line">			url: '/ajaxjson/find.do',</div><div class="line">			data: &#123;"time":new Date()&#125;,</div><div class="line">			success: function(data)&#123;</div><div class="line">					var goodsbody = document.getElementById("goodsbody");</div><div class="line">					goodsbody.innerHTML = "";</div><div class="line">					for ( var i = 0; i &lt; data.length; i++) &#123;</div><div class="line">						var goodsTr = goodsbody.insertRow();</div><div class="line">						var goodsNameTd = goodsTr.insertCell();</div><div class="line">						goodsNameTd.innerText = data[i].gid;</div><div class="line">						var goodsPriceTd = goodsTr.insertCell();</div><div class="line">						goodsPriceTd.innerText = data[i].gname;</div><div class="line">						var goodsNumTd = goodsTr.insertCell();</div><div class="line">						goodsNumTd.innerText = data[i].types.tname;</div><div class="line">					&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;);</div><div class="line">	&#125;);</div><div class="line">&#125;);</div><div class="line">&lt;/script&gt;</div><div class="line">&lt;/head&gt;</div><div class="line"></div><div class="line">&lt;body&gt;</div><div class="line">	&lt;input type="button" value="查询" id="btnquery"&gt;</div><div class="line">	&lt;table width="80%" cellpadding="0" border="1" cellspacing="0"&gt;</div><div class="line">		&lt;thead&gt;</div><div class="line">			&lt;tr&gt;</div><div class="line">				&lt;th&gt;商品编号&lt;/th&gt;</div><div class="line">				&lt;th&gt;商品名称&lt;/th&gt;</div><div class="line">				&lt;th&gt;商品类型&lt;/th&gt;</div><div class="line">			&lt;/tr&gt;</div><div class="line">		&lt;/thead&gt;</div><div class="line">		&lt;tbody id="goodsbody"&gt;&lt;/tbody&gt;</div><div class="line">	&lt;/table&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ajax/">ajax</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/12/20/ajax/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-json" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/20/json/">json</a>
+    </h1>
+  
+
+        <a href="/2016/12/20/json/" class="archive-article-date">
+  	<time datetime="2016-12-20T01:41:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-20</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>JSON是一种数据表示的格式，包括json对象和json数组。</p>
+<h5 id="json的基本语法格式"><a href="#json的基本语法格式" class="headerlink" title="json的基本语法格式"></a>json的基本语法格式</h5><p>对象： { 属性：值 ， 属性：值 }</p>
+<p>数组：[对象，对象，对象]<br>获得一个数组的大小 使用 length属性。</p>
+<p>访问一个对象的属性：json对象.属性。。。。可以取值也可赋值。<br>访问一个数组中的元素的方式：json数组[索引]</p>
+<p>JSON文本是一个符合JSON语法格式的字符串。因为服务器只能返回文本。</p>
+<p>JSON文本转换成JSON对象使用eval函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> json对象 = <span class="built_in">eval</span>(“(“+json文本+”)”);</div></pre></td></tr></table></figure>
+<p>在服务器端，在Java类中三个状态之间的转换。</p>
+<p>1 json文本<br>2 json对象/数组<br>3 java对象/集合</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.ArrayList;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">import</span> net.sf.json.JSONArray;</div><div class="line"><span class="keyword">import</span> net.sf.json.JSONObject;</div><div class="line"><span class="keyword">import</span> net.sf.json.JsonConfig;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.junit.Test;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.domain.Goods;</div><div class="line"><span class="keyword">import</span> com.domain.Stu;</div><div class="line"><span class="keyword">import</span> com.domain.Types;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JSONTest</span> </span>&#123;</div><div class="line">	<span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test01</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="comment">//java对象。</span></div><div class="line">		Stu stu = <span class="keyword">new</span> Stu(<span class="number">1</span>,<span class="string">"peter"</span>);</div><div class="line">		</div><div class="line">		<span class="comment">//先将java对象转换成json对象</span></div><div class="line">		JSONObject jsonobj = JSONObject.fromObject(stu);</div><div class="line">		</div><div class="line">		<span class="comment">//将json对象转换成json文本。</span></div><div class="line">		String jsontxt = jsonobj.toString();</div><div class="line">		</div><div class="line">		System.out.println(jsontxt);</div><div class="line">		<span class="comment">//将json文本转换成json对象</span></div><div class="line">		JSONObject jsono = JSONObject.fromObject(jsontxt);</div><div class="line">		<span class="comment">//将json对象转换成java对象</span></div><div class="line">		Stu s = (Stu) (JSONObject.toBean(jsono, Stu.class));</div><div class="line">		</div><div class="line">		System.out.println(s.getName());</div><div class="line">		</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test02</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="comment">//java集合。</span></div><div class="line">		Stu stu1 = <span class="keyword">new</span> Stu(<span class="number">1</span>,<span class="string">"peter1"</span>);</div><div class="line">		Stu stu2 = <span class="keyword">new</span> Stu(<span class="number">2</span>,<span class="string">"peter2"</span>);</div><div class="line">		Stu stu3 = <span class="keyword">new</span> Stu(<span class="number">3</span>,<span class="string">"peter3"</span>);</div><div class="line">		List&lt;Stu&gt; stuList = <span class="keyword">new</span> ArrayList&lt;Stu&gt;();</div><div class="line">		stuList.add(stu1);</div><div class="line">		stuList.add(stu2);</div><div class="line">		stuList.add(stu3);</div><div class="line">		</div><div class="line">		<span class="comment">//将java集合转换成json数组</span></div><div class="line">		JSONArray jsonArray = JSONArray.fromObject(stuList);</div><div class="line">		</div><div class="line">		<span class="comment">//将json数组转换成json文本</span></div><div class="line">		String jsonArrayTxt = jsonArray.toString();</div><div class="line">		</div><div class="line">		System.out.println(jsonArrayTxt);</div><div class="line">		</div><div class="line">	&#125;</div><div class="line">	<span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test03</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="comment">//java对象。</span></div><div class="line">		Types types = <span class="keyword">new</span> Types(<span class="number">1</span>, <span class="string">"手机"</span>);</div><div class="line">		Goods goods = <span class="keyword">new</span> Goods(<span class="number">1</span>, <span class="string">"iPhone 7"</span>, types);</div><div class="line">		</div><div class="line">		JSONObject jsonObject = JSONObject.fromObject(goods);</div><div class="line">		</div><div class="line">		String jsonObjectTxt = jsonObject.toString();</div><div class="line">		</div><div class="line">		System.out.println(jsonObjectTxt);</div><div class="line">		</div><div class="line">	&#125;</div><div class="line">	<span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test04</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="comment">//java对象。</span></div><div class="line">		Types types = <span class="keyword">new</span> Types(<span class="number">1</span>, <span class="string">"手机"</span>);</div><div class="line">		Goods goods = <span class="keyword">new</span> Goods(<span class="number">1</span>, <span class="string">"iPhone 7"</span>, types);</div><div class="line">		types.getGoodsSet().add(goods);</div><div class="line">		</div><div class="line">		<span class="comment">//使用jsonConfig对象配置转换。可以设置哪些属性表示，哪些属性不表示,在两个类双向的属性包含对方的时候使用。</span></div><div class="line">		JsonConfig jsonConfig = <span class="keyword">new</span> JsonConfig();</div><div class="line">      <span class="comment">//表示显示时候types里面的goodsset将不会显示，从而不会造成死循环</span></div><div class="line">		jsonConfig.setExcludes(<span class="keyword">new</span> String[]&#123;<span class="string">"goodsSet"</span>&#125;);</div><div class="line">		</div><div class="line">		JSONObject jsonObject = JSONObject.fromObject(goods,jsonConfig);</div><div class="line">		</div><div class="line">		String jsonObjectTxt = jsonObject.toString();</div><div class="line">		</div><div class="line">		System.out.println(jsonObjectTxt);</div><div class="line">		</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/json/">json</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/12/20/json/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-throwable" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -156,7 +286,6 @@
 <p> Error（错误）:是程序无法处理的错误，表示运行应用程序中较严重问题。大多数错误与代码编写者执行的操作无关，而表示代码运行时 JVM（Java 虚拟机）出现的问题。例如，Java虚拟机运行错误（Virtual MachineError），当 JVM 不再有继续执行操作所需的内存资源时，将出现 OutOfMemoryError。这些异常发生时，Java虚拟机（JVM）一般会选择线程终止。</p>
 <p>。这些错误表示故障发生于虚拟机自身、或者发生在虚拟机试图执行应用时，如Java虚拟机运行错误（Virtual MachineError）、类定义错误（NoClassDefFoundError）等。这些错误是不可查的，因为它们在应用程序的控制和处理能力之 外，而且绝大多数是程序运行时不允许出现的状况。对于设计合理的应用程序来说，即使确实发生了错误，本质上也不应该试图去处理它所引起的异常状况。在 Java中，错误通过Error的子类描述。</p>
 <p> Exception（异常）:是程序本身可以处理的异常。</p>
-<p> Exception 类有一个重要的子类 RuntimeException。RuntimeException 类及其子类表示“JVM 常用操作”引发的错误。例如，若试图使用空值对象引用、除数为零或数组越界，则分别引发运行时异常（NullPointerException、ArithmeticException）和 ArrayIndexOutOfBoundException。</p>
 <p> Exception 类有一个重要的子类 RuntimeException。RuntimeException 类及其子类表示“JVM 常用操作”引发的错误。例如，若试图使用空值对象引用、除数为零或数组越界，则分别引发运行时异常（NullPointerException、ArithmeticException）和 ArrayIndexOutOfBoundException。</p>
 <p>  在 Java 应用程序中，异常处理机制为：抛出异常，捕捉异常。</p>
 <p> 抛出异常：当一个方法出现错误引发异常时，方法创建异常对象并交付运行时系统，异常对象中包含了异常类型和异常出现时的程序状态等异常信息。运行时系统负责寻找处置异常的代码并执行。</p>
@@ -1037,60 +1166,10 @@ b.前者采用以&quot;空间换时间&quot;的方法，后者采用以&quot;时
 
 
   
-    <article id="post-first" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/10/first/">first</a>
-    </h1>
-  
-
-        <a href="/2016/12/10/first/" class="archive-article-date">
-  	<time datetime="2016-12-10T11:22:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-10</time>
-</a>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="\images\bao.JPG" alt="bao"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/learning/">learning</a></li></ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2016/12/10/first/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 
 
@@ -1149,11 +1228,15 @@ b.前者采用以&quot;空间换时间&quot;的方法，后者采用以&quot;时
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">ajax</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">learning</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">API</a>
+                <a href="javascript:void(0)">json</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1161,11 +1244,15 @@ b.前者采用以&quot;空间换时间&quot;的方法，后者采用以&quot;时
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">jsp servlet</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">jsp servlet</a>
+                <a href="javascript:void(0)">throwable</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1173,7 +1260,7 @@ b.前者采用以&quot;空间换时间&quot;的方法，后者采用以&quot;时
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">throwable</a>
+                <a href="javascript:void(0)">API</a>
               </li>
             
             <div class="clearfix"></div>

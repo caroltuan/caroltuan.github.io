@@ -6,38 +6,30 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>java基础整理 | Carol</title>
+  <title>ajax | Carol</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="垃圾回收JAVA程序运行过程中，有一个线程叫垃圾回收线程。程序运行了一时间之后很多垃圾信息。回收。
-自动调用。程序员不能控制。1 内存不够。2 CPU空闲。
-
-垃圾：没有被引用的内存空间。
-java运行机制Java先编译后解释型语言。
-源文件(.java)----编译-&amp;gt;类文件(.class)（字节码文件）---解释执行（JVM：java虚拟机）---&amp;gt;机器指令
-JDK(Java De">
+  <meta name="description" content="Ajax是一个异步刷新的技术。可以现实在页面上的局部刷新。
+Ajax技术实现只使用一个xhr对象。
+XHR对象的属性，方法和事件用open方法创建一个请求​    open(method, url, asynchronous)​    method: 请求类型。可以是get或post
+​    url: 请求地址。可以使用绝对、相对地址，地址可以附带查询字符串
+​    asynchronous:">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java基础整理">
-<meta property="og:url" content="http://yoursite.com/2016/12/11/java1/index.html">
+<meta property="og:title" content="ajax">
+<meta property="og:url" content="http://yoursite.com/2016/12/20/ajax/index.html">
 <meta property="og:site_name" content="Carol">
-<meta property="og:description" content="垃圾回收JAVA程序运行过程中，有一个线程叫垃圾回收线程。程序运行了一时间之后很多垃圾信息。回收。
-自动调用。程序员不能控制。1 内存不够。2 CPU空闲。
-
-垃圾：没有被引用的内存空间。
-java运行机制Java先编译后解释型语言。
-源文件(.java)----编译-&amp;gt;类文件(.class)（字节码文件）---解释执行（JVM：java虚拟机）---&amp;gt;机器指令
-JDK(Java De">
-<meta property="og:image" content="http://yoursite.com/\images\javamodel.png">
-<meta property="og:updated_time" content="2016-12-11T01:57:04.854Z">
+<meta property="og:description" content="Ajax是一个异步刷新的技术。可以现实在页面上的局部刷新。
+Ajax技术实现只使用一个xhr对象。
+XHR对象的属性，方法和事件用open方法创建一个请求​    open(method, url, asynchronous)​    method: 请求类型。可以是get或post
+​    url: 请求地址。可以使用绝对、相对地址，地址可以附带查询字符串
+​    asynchronous:">
+<meta property="og:updated_time" content="2016-12-20T02:20:05.306Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java基础整理">
-<meta name="twitter:description" content="垃圾回收JAVA程序运行过程中，有一个线程叫垃圾回收线程。程序运行了一时间之后很多垃圾信息。回收。
-自动调用。程序员不能控制。1 内存不够。2 CPU空闲。
-
-垃圾：没有被引用的内存空间。
-java运行机制Java先编译后解释型语言。
-源文件(.java)----编译-&amp;gt;类文件(.class)（字节码文件）---解释执行（JVM：java虚拟机）---&amp;gt;机器指令
-JDK(Java De">
-<meta name="twitter:image" content="http://yoursite.com/\images\javamodel.png">
+<meta name="twitter:title" content="ajax">
+<meta name="twitter:description" content="Ajax是一个异步刷新的技术。可以现实在页面上的局部刷新。
+Ajax技术实现只使用一个xhr对象。
+XHR对象的属性，方法和事件用open方法创建一个请求​    open(method, url, asynchronous)​    method: 请求类型。可以是get或post
+​    url: 请求地址。可以使用绝对、相对地址，地址可以附带查询字符串
+​    asynchronous:">
   
     <link rel="alternative" href="/atom.xml" title="Carol" type="application/atom+xml">
   
@@ -153,72 +145,40 @@ JDK(Java De">
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-java1" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-ajax" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      java基础整理
+      ajax
     </h1>
   
 
-        <a href="/2016/12/11/java1/" class="archive-article-date">
-  	<time datetime="2016-12-11T01:31:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-11</time>
+        <a href="/2016/12/20/ajax/" class="archive-article-date">
+  	<time datetime="2016-12-20T02:10:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-20</time>
 </a>
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h5 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h5><p>JAVA程序运行过程中，有一个线程叫垃圾回收线程。程序运行了一时间之后很多垃圾信息。回收。</p>
-<pre><code>自动调用。程序员不能控制。1 内存不够。2 CPU空闲。
-
-垃圾：没有被引用的内存空间。
-</code></pre><h5 id="java运行机制"><a href="#java运行机制" class="headerlink" title="java运行机制"></a>java运行机制</h5><p>Java先编译后解释型语言。</p>
-<pre><code>源文件(.java)----编译-&gt;类文件(.class)（字节码文件）---解释执行（JVM：java虚拟机）---&gt;机器指令
-</code></pre><p>JDK(Java Development Kit) Java开发工具包 </p>
-<p>   JDK = JRE + 工具（编译器、调试器、其他工具……） + 类库 </p>
-<p>JRE (Java Runtime Environment)  Java运行时环境 </p>
-<p>  JRE = JVM(Java Virtual Machine) Java虚拟机+解释器 </p>
-<p><img src="\images\javamodel.png" alt="javamodel"></p>
-<p>原始数据类型就只有8个：byte,short,int,long  </p>
-<p>float,double  char   boolean</p>
-<h5 id="String字符串数据类型"><a href="#String字符串数据类型" class="headerlink" title="String字符串数据类型"></a>String字符串数据类型</h5><p>String实际上它是一个类,</p>
-<p>字符串不变性：表示字符串字面量是不会改变的。</p>
-<p>字符串常量池。用来存放字符串常量</p>
-<h5 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h5><p>数组就是保存同一类型的一大堆的变量。</p>
-<p>声明一个数组。   int[] a; 推荐使用。</p>
-<p>数组的异常- ArrayIndexOutOfBoundsException（索引超出范围）</p>
-<p><strong>数组是引用数据类型</strong></p>
-<p>当一个数组给另一个数组，使用数组名称赋值时，实际上是将数组的引用交给另一个数组。</p>
-<p>两个数组使用的是同一块内存，两个数组引用是相同的。</p>
-<p>所以一个数组对数组元素的修改等于两个数组一起改变。</p>
-<h6 id="java-util-Arrays类。封装了针对数组的操作方法。"><a href="#java-util-Arrays类。封装了针对数组的操作方法。" class="headerlink" title="java.util.Arrays类。封装了针对数组的操作方法。"></a>java.util.Arrays类。封装了针对数组的操作方法。</h6><p> sort。排序方法。sort(byte[] a)对指定的 byte 型数组按数字升序进行排序。</p>
-<p>binarySearch(int[]a,int key)</p>
-<pre><code>使用二分搜索法来搜索指定的 int 型数组，以获得指定的值。必须在进行此调用之前对数组进行排序。如果没有对数组进行排序，则结果是不确定的。如果数组包含多个带有指定值的元素，则无法保证找到的是哪一个。 
-</code></pre><p>参数： </p>
-<pre><code>a - 要搜索的数组 
-
-key - 要搜索的值 
-</code></pre><p>返回： </p>
-<pre><code>如果它包含在数组中，则返回搜索键的索引；否则返回 (-(*插入点*) - 1)。*插入点* 被定义为将键插入数组的那一点：即第一个大于此键的元素索引，如果数组中的所有元素都小于指定的键，则为 a.length。注意，这保证了当且仅当此键被找到时，返回的值将 &gt;= 0。
-</code></pre><p>copyOf使用老数组创建一个新的数组。同时拷贝数据。</p>
-<h5 id="二维数组和多维数组"><a href="#二维数组和多维数组" class="headerlink" title="二维数组和多维数组"></a>二维数组和多维数组</h5><p>二维数组是否可以排序？不能，会报ClassCastException异常。</p>
-<h5 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h5><p>为什么要创建函数？</p>
-<pre><code>一个函数代表了一个功能。功能最好单一，独立，不可拆分。
-
-可以重复使用
-
-调用方便
-
-结构清晰，层次更明确，修改容易。
-
-可以利用函数将多层的循环变成多个一层的循环。
-
-为了给我们的程序分模块。
-</code></pre><p>“</p>
-
+        <p>Ajax是一个异步刷新的技术。可以现实在页面上的局部刷新。</p>
+<p>Ajax技术实现只使用一个xhr对象。</p>
+<h5 id="XHR对象的属性，方法和事件"><a href="#XHR对象的属性，方法和事件" class="headerlink" title="XHR对象的属性，方法和事件"></a>XHR对象的属性，方法和事件</h5><h6 id="用open方法创建一个请求"><a href="#用open方法创建一个请求" class="headerlink" title="用open方法创建一个请求"></a>用open方法创建一个请求</h6><p>​    open(method, url, asynchronous)<br>​    method: 请求类型。可以是get或post</p>
+<p>​    url: 请求地址。可以使用绝对、相对地址，地址可以附带查询字符串</p>
+<p>​    asynchronous: 可选参数，请求同步还是异步。默认为true（异步）</p>
+<h6 id="用send方法发送一个请求"><a href="#用send方法发送一个请求" class="headerlink" title="用send方法发送一个请求"></a>用send方法发送一个请求</h6><p>​    send(parameter)<br>     发送无参数请求:send(null)</p>
+<h6 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h6><p>onreadystatechange   每个状态改变时都会触发这个事件处理器，通常会调用一个 JavaScript</p>
+<p>readyState    请求的状态，有5个可取值： 0=未初始化, 1=正在加载, 2=已加载, 3=交互中, 4=完成 </p>
+<p>responseText   响应内容正文的纯文本形式 </p>
+<p>responseXML  使用XML表示服务器的响应，这个对象可以解析为一个 DOM 对象 </p>
+<p>status  服务器的 HTTP 状态码（200对应OK，404对应Not Found）</p>
+<p>使用ajax实现一个请求</p>
+<p>servlet</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"><span class="keyword">import</span> java.io.PrintWriter;</div><div class="line"><span class="keyword">import</span> java.util.ArrayList;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.servlet.ServletException;</div><div class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</div><div class="line"></div><div class="line"><span class="keyword">import</span> net.sf.json.JSONArray;</div><div class="line"><span class="keyword">import</span> net.sf.json.JsonConfig;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.domain.Goods;</div><div class="line"><span class="keyword">import</span> com.domain.Types;</div><div class="line"></div><div class="line"><span class="meta">@WebServlet</span>(name = <span class="string">"GoodsServlet"</span>, urlPatterns = &#123; <span class="string">"/find.do"</span> &#125;)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GoodsServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span></div><div class="line">			<span class="keyword">throws</span> ServletException, IOException &#123;</div><div class="line"></div><div class="line">		<span class="comment">// 获得商品的集合</span></div><div class="line">		List&lt;Goods&gt; goodsList = <span class="keyword">new</span> ArrayList&lt;Goods&gt;();</div><div class="line">		Types types = <span class="keyword">new</span> Types(<span class="number">1</span>, <span class="string">"手机"</span>);</div><div class="line">		goodsList.add(<span class="keyword">new</span> Goods(<span class="number">1</span>, <span class="string">"小米1"</span>, types));</div><div class="line">		goodsList.add(<span class="keyword">new</span> Goods(<span class="number">2</span>, <span class="string">"小米2"</span>, types));</div><div class="line">		goodsList.add(<span class="keyword">new</span> Goods(<span class="number">3</span>, <span class="string">"小米3"</span>, types));</div><div class="line">		goodsList.add(<span class="keyword">new</span> Goods(<span class="number">4</span>, <span class="string">"小米4"</span>, types));</div><div class="line">		goodsList.add(<span class="keyword">new</span> Goods(<span class="number">5</span>, <span class="string">"小米5"</span>, types));</div><div class="line">		</div><div class="line">		<span class="comment">//把集合转成json数组,将json数组转成json文本</span></div><div class="line">		JsonConfig jsonConfig = <span class="keyword">new</span> JsonConfig();</div><div class="line">		jsonConfig.setExcludes(<span class="keyword">new</span> String[]&#123;<span class="string">"goodsSet"</span>&#125;);</div><div class="line">		JSONArray jsonArray = JSONArray.fromObject(goodsList,jsonConfig);</div><div class="line"></div><div class="line">		response.setContentType(<span class="string">"text/html"</span>);</div><div class="line">		response.setCharacterEncoding(<span class="string">"utf-8"</span>);</div><div class="line">		PrintWriter out = response.getWriter();</div><div class="line"></div><div class="line">		out.print(jsonArray.toString());</div><div class="line">		</div><div class="line">		out.flush();</div><div class="line">		out.close();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>jsp</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">&lt;meta http-equiv="expires" content="0"&gt;</div><div class="line">&lt;meta http-equiv="keywords" content="keyword1,keyword2,keyword3"&gt;</div><div class="line">&lt;meta http-equiv="description" content="This is my page"&gt;</div><div class="line">&lt;!--</div><div class="line">	&lt;link rel="stylesheet" type="text/css" href="styles.css"&gt;</div><div class="line">	--&gt;</div><div class="line"></div><div class="line">&lt;script type="text/javascript" src="/ajaxjson/js/jquery-1.11.1.min.js"&gt;&lt;/script&gt;</div><div class="line">&lt;script type="text/javascript"&gt;</div><div class="line">$(document).ready(function()&#123;</div><div class="line">	$("#btnquery").click(function()&#123;</div><div class="line">		$.ajax(&#123;</div><div class="line">			type: 'get',</div><div class="line">			dataType: 'json',</div><div class="line">			url: '/ajaxjson/find.do',</div><div class="line">			data: &#123;"time":new Date()&#125;,</div><div class="line">			success: function(data)&#123;</div><div class="line">					var goodsbody = document.getElementById("goodsbody");</div><div class="line">					goodsbody.innerHTML = "";</div><div class="line">					for ( var i = 0; i &lt; data.length; i++) &#123;</div><div class="line">						var goodsTr = goodsbody.insertRow();</div><div class="line">						var goodsNameTd = goodsTr.insertCell();</div><div class="line">						goodsNameTd.innerText = data[i].gid;</div><div class="line">						var goodsPriceTd = goodsTr.insertCell();</div><div class="line">						goodsPriceTd.innerText = data[i].gname;</div><div class="line">						var goodsNumTd = goodsTr.insertCell();</div><div class="line">						goodsNumTd.innerText = data[i].types.tname;</div><div class="line">					&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;);</div><div class="line">	&#125;);</div><div class="line">&#125;);</div><div class="line">&lt;/script&gt;</div><div class="line">&lt;/head&gt;</div><div class="line"></div><div class="line">&lt;body&gt;</div><div class="line">	&lt;input type="button" value="查询" id="btnquery"&gt;</div><div class="line">	&lt;table width="80%" cellpadding="0" border="1" cellspacing="0"&gt;</div><div class="line">		&lt;thead&gt;</div><div class="line">			&lt;tr&gt;</div><div class="line">				&lt;th&gt;商品编号&lt;/th&gt;</div><div class="line">				&lt;th&gt;商品名称&lt;/th&gt;</div><div class="line">				&lt;th&gt;商品类型&lt;/th&gt;</div><div class="line">			&lt;/tr&gt;</div><div class="line">		&lt;/thead&gt;</div><div class="line">		&lt;tbody id="goodsbody"&gt;&lt;/tbody&gt;</div><div class="line">	&lt;/table&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
       
 
       
@@ -249,7 +209,7 @@ key - 要搜索的值
       
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags"></i>
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ajax/">ajax</a></li></ul>
 	</div>
 
       
@@ -302,7 +262,7 @@ key - 要搜索的值
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2016/12/11/java1/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2016/12/20/ajax/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -316,18 +276,9 @@ key - 要搜索的值
   
 <nav id="article-nav">
   
-    <a href="/2016/12/11/java-oop/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          java oop（基础整理）
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/12/10/multithreading/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">multithreading</div>
+    <a href="/2016/12/20/json/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">json</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -340,7 +291,7 @@ key - 要搜索的值
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="java1" data-title="java基础整理" data-url="http://yoursite.com/2016/12/11/java1/"></div>
+	<div class="ds-thread" data-thread-key="ajax" data-title="ajax" data-url="http://yoursite.com/2016/12/20/ajax/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
