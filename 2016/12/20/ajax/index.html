@@ -22,7 +22,7 @@ Ajax技术实现只使用一个xhr对象。
 XHR对象的属性，方法和事件用open方法创建一个请求​    open(method, url, asynchronous)​    method: 请求类型。可以是get或post
 ​    url: 请求地址。可以使用绝对、相对地址，地址可以附带查询字符串
 ​    asynchronous:">
-<meta property="og:updated_time" content="2016-12-20T02:20:05.306Z">
+<meta property="og:updated_time" content="2016-12-20T02:23:32.073Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ajax">
 <meta name="twitter:description" content="Ajax是一个异步刷新的技术。可以现实在页面上的局部刷新。
@@ -178,7 +178,7 @@ XHR对象的属性，方法和事件用open方法创建一个请求​    open(m
 <p>servlet</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"><span class="keyword">import</span> java.io.PrintWriter;</div><div class="line"><span class="keyword">import</span> java.util.ArrayList;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.servlet.ServletException;</div><div class="line"><span class="keyword">import</span> javax.servlet.annotation.WebServlet;</div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</div><div class="line"></div><div class="line"><span class="keyword">import</span> net.sf.json.JSONArray;</div><div class="line"><span class="keyword">import</span> net.sf.json.JsonConfig;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.domain.Goods;</div><div class="line"><span class="keyword">import</span> com.domain.Types;</div><div class="line"></div><div class="line"><span class="meta">@WebServlet</span>(name = <span class="string">"GoodsServlet"</span>, urlPatterns = &#123; <span class="string">"/find.do"</span> &#125;)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GoodsServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span></div><div class="line">			<span class="keyword">throws</span> ServletException, IOException &#123;</div><div class="line"></div><div class="line">		<span class="comment">// 获得商品的集合</span></div><div class="line">		List&lt;Goods&gt; goodsList = <span class="keyword">new</span> ArrayList&lt;Goods&gt;();</div><div class="line">		Types types = <span class="keyword">new</span> Types(<span class="number">1</span>, <span class="string">"手机"</span>);</div><div class="line">		goodsList.add(<span class="keyword">new</span> Goods(<span class="number">1</span>, <span class="string">"小米1"</span>, types));</div><div class="line">		goodsList.add(<span class="keyword">new</span> Goods(<span class="number">2</span>, <span class="string">"小米2"</span>, types));</div><div class="line">		goodsList.add(<span class="keyword">new</span> Goods(<span class="number">3</span>, <span class="string">"小米3"</span>, types));</div><div class="line">		goodsList.add(<span class="keyword">new</span> Goods(<span class="number">4</span>, <span class="string">"小米4"</span>, types));</div><div class="line">		goodsList.add(<span class="keyword">new</span> Goods(<span class="number">5</span>, <span class="string">"小米5"</span>, types));</div><div class="line">		</div><div class="line">		<span class="comment">//把集合转成json数组,将json数组转成json文本</span></div><div class="line">		JsonConfig jsonConfig = <span class="keyword">new</span> JsonConfig();</div><div class="line">		jsonConfig.setExcludes(<span class="keyword">new</span> String[]&#123;<span class="string">"goodsSet"</span>&#125;);</div><div class="line">		JSONArray jsonArray = JSONArray.fromObject(goodsList,jsonConfig);</div><div class="line"></div><div class="line">		response.setContentType(<span class="string">"text/html"</span>);</div><div class="line">		response.setCharacterEncoding(<span class="string">"utf-8"</span>);</div><div class="line">		PrintWriter out = response.getWriter();</div><div class="line"></div><div class="line">		out.print(jsonArray.toString());</div><div class="line">		</div><div class="line">		out.flush();</div><div class="line">		out.close();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>jsp</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">&lt;meta http-equiv="expires" content="0"&gt;</div><div class="line">&lt;meta http-equiv="keywords" content="keyword1,keyword2,keyword3"&gt;</div><div class="line">&lt;meta http-equiv="description" content="This is my page"&gt;</div><div class="line">&lt;!--</div><div class="line">	&lt;link rel="stylesheet" type="text/css" href="styles.css"&gt;</div><div class="line">	--&gt;</div><div class="line"></div><div class="line">&lt;script type="text/javascript" src="/ajaxjson/js/jquery-1.11.1.min.js"&gt;&lt;/script&gt;</div><div class="line">&lt;script type="text/javascript"&gt;</div><div class="line">$(document).ready(function()&#123;</div><div class="line">	$("#btnquery").click(function()&#123;</div><div class="line">		$.ajax(&#123;</div><div class="line">			type: 'get',</div><div class="line">			dataType: 'json',</div><div class="line">			url: '/ajaxjson/find.do',</div><div class="line">			data: &#123;"time":new Date()&#125;,</div><div class="line">			success: function(data)&#123;</div><div class="line">					var goodsbody = document.getElementById("goodsbody");</div><div class="line">					goodsbody.innerHTML = "";</div><div class="line">					for ( var i = 0; i &lt; data.length; i++) &#123;</div><div class="line">						var goodsTr = goodsbody.insertRow();</div><div class="line">						var goodsNameTd = goodsTr.insertCell();</div><div class="line">						goodsNameTd.innerText = data[i].gid;</div><div class="line">						var goodsPriceTd = goodsTr.insertCell();</div><div class="line">						goodsPriceTd.innerText = data[i].gname;</div><div class="line">						var goodsNumTd = goodsTr.insertCell();</div><div class="line">						goodsNumTd.innerText = data[i].types.tname;</div><div class="line">					&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;);</div><div class="line">	&#125;);</div><div class="line">&#125;);</div><div class="line">&lt;/script&gt;</div><div class="line">&lt;/head&gt;</div><div class="line"></div><div class="line">&lt;body&gt;</div><div class="line">	&lt;input type="button" value="查询" id="btnquery"&gt;</div><div class="line">	&lt;table width="80%" cellpadding="0" border="1" cellspacing="0"&gt;</div><div class="line">		&lt;thead&gt;</div><div class="line">			&lt;tr&gt;</div><div class="line">				&lt;th&gt;商品编号&lt;/th&gt;</div><div class="line">				&lt;th&gt;商品名称&lt;/th&gt;</div><div class="line">				&lt;th&gt;商品类型&lt;/th&gt;</div><div class="line">			&lt;/tr&gt;</div><div class="line">		&lt;/thead&gt;</div><div class="line">		&lt;tbody id="goodsbody"&gt;&lt;/tbody&gt;</div><div class="line">	&lt;/table&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">&lt;meta http-equiv=<span class="string">"expires"</span> content=<span class="string">"0"</span>&gt;</div><div class="line">&lt;meta http-equiv="keywords" content="keyword1,keyword2,keyword3"&gt;</div><div class="line">&lt;meta http-equiv="description" content="This is my page"&gt;</div><div class="line">&lt;!--</div><div class="line">	&lt;link rel="stylesheet" type="text/css" href="styles.css"&gt;</div><div class="line">	--&gt;</div><div class="line"></div><div class="line">&lt;script type="text/javascript" src="/ajaxjson/js/jquery-1.11.1.min.js"&gt;&lt;/script&gt;</div><div class="line">&lt;script type="text/javascript"&gt;</div><div class="line">$(document).ready(function()&#123;</div><div class="line">	$("#btnquery").click(function()&#123;</div><div class="line">		$.ajax(&#123;</div><div class="line">			type: 'get',</div><div class="line">			dataType: 'json',</div><div class="line">			url: '/ajaxjson/find.do',</div><div class="line">			data: &#123;"time":new Date()&#125;,</div><div class="line">			success: function(data)&#123;</div><div class="line">					var goodsbody = document.getElementById("goodsbody");</div><div class="line">					goodsbody.innerHTML = "";</div><div class="line">					for ( var i = 0; i &lt; data.length; i++) &#123;</div><div class="line">						var goodsTr = goodsbody.insertRow();</div><div class="line">						var goodsNameTd = goodsTr.insertCell();</div><div class="line">						goodsNameTd.innerText = data[i].gid;</div><div class="line">						var goodsPriceTd = goodsTr.insertCell();</div><div class="line">						goodsPriceTd.innerText = data[i].gname;</div><div class="line">						var goodsNumTd = goodsTr.insertCell();</div><div class="line">						goodsNumTd.innerText = data[i].types.tname;</div><div class="line">					&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;);</div><div class="line">	&#125;);</div><div class="line">&#125;);</div><div class="line">&lt;/script&gt;</div><div class="line">&lt;/head&gt;</div><div class="line"></div><div class="line">&lt;body&gt;</div><div class="line">	&lt;input type="button" value="查询" id="btnquery"&gt;</div><div class="line">	&lt;table width="80%" cellpadding="0" border="1" cellspacing="0"&gt;</div><div class="line">		&lt;thead&gt;</div><div class="line">			&lt;tr&gt;</div><div class="line">				&lt;th&gt;商品编号&lt;/th&gt;</div><div class="line">				&lt;th&gt;商品名称&lt;/th&gt;</div><div class="line">				&lt;th&gt;商品类型&lt;/th&gt;</div><div class="line">			&lt;/tr&gt;</div><div class="line">		&lt;/thead&gt;</div><div class="line">		&lt;tbody id="goodsbody"&gt;&lt;/tbody&gt;</div><div class="line">	&lt;/table&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
       
 
       
@@ -276,6 +276,15 @@ XHR对象的属性，方法和事件用open方法创建一个请求​    open(m
   
 <nav id="article-nav">
   
+    <a href="/2016/12/21/Hibernate/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Hibernate
+        
+      </div>
+    </a>
+  
   
     <a href="/2016/12/20/json/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">json</div>
@@ -363,11 +372,7 @@ XHR对象的属性，方法和事件用open方法创建一个请求​    open(m
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">JDBC</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">ajax</a>
+                <a href="javascript:void(0)">三大框架 hibernate</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -375,7 +380,15 @@ XHR对象的属性，方法和事件用open方法创建一个请求​    open(m
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">json</a>
+                <a href="javascript:void(0)">JDBC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">API</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">ajax</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -383,11 +396,15 @@ XHR对象的属性，方法和事件用open方法创建一个请求​    open(m
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)">jsp servlet</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)">java</a>
+                <a href="javascript:void(0)">json</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -396,10 +413,6 @@ XHR对象的属性，方法和事件用open方法创建一个请求​    open(m
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)">多线程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)">API</a>
               </li>
             
             <div class="clearfix"></div>
